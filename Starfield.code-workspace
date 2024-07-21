@@ -1,0 +1,15 @@
+{
+	"folders": 
+	[
+		{
+			"path": "H:/Games/steamapps/common/Starfield/Data/Scripts/Source"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": 
+	{
+		"papyrus.version": "starfield"
+	}
+}
