@@ -40,7 +40,7 @@ EndEvent
 Function DoExchange()
     If(Mode > 0)
         If(!AstraRerollContainerRef)
-            AstraRerollContainerRef = Game.GetPlayer().PlaceAtMe(AstraRerollContainer)
+            AstraRerollContainerRef = Game.GetPlayer().PlaceAtMe(AE_TAHQ_Stache_Vendor_WorkContainer)
         EndIf
         RegisterForMenuOpenCloseEvent("ContainerMenu")
         AstraRerollContainerRef.OpenOneWayTransferMenu(true)
@@ -66,7 +66,7 @@ Function AstraExchange(Int aiAstras)
     EndLockGuard
 EndFunction
 
-Container Property AstraRerollContainer Auto Const Mandatory
+Container Property AE_TAHQ_Stache_Vendor_WorkContainer Auto Const Mandatory
 ObjectReference Property AstraRerollContainerRef Auto
 Int Property Result Auto Conditional
 Int Property Mode Auto

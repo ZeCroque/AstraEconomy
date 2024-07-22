@@ -1,5 +1,5 @@
 ;BEGIN FRAGMENT CODE - Do not edit anything between this and the end comment
-Scriptname Fragments:TopicInfos:TIF_SFBGS003_DialogueTAHQ_010008D7 Extends TopicInfo Hidden Const
+Scriptname Fragments:TopicInfos:TIF_SFBGS003_DialogueTAHQ_0100080C Extends TopicInfo Hidden Const
 
 ;BEGIN FRAGMENT Fragment_End
 Function Fragment_End(ObjectReference akSpeakerRef)
