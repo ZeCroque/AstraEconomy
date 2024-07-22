@@ -21,7 +21,8 @@
             "args": ["AstraEconomyRelease.ppj"],
             "problemMatcher": [],
             "group": {
-                "kind": "build"
+                "kind": "build",
+                "isDefault": true
             }
         }
     ]
