@@ -140,7 +140,7 @@ Function DoExchange()
             AstraRerollContainerRef = Game.GetPlayer().PlaceAtMe(AE_TAHQ_Stache_Vendor_WorkContainer)
         EndIf
         RegisterForMenuOpenCloseEvent("ContainerMenu")
-        AstraRerollContainerRef.OpenOneWayTransferMenu(true)
+        AstraRerollContainerRef.OpenOneWayTransferMenu(true, AE_FilterList)
     EndIf
 EndFunction
 
@@ -275,3 +275,5 @@ Keyword Property ArmorTypeSpacesuitHelmet Auto Const Mandatory
 FormList Property WeaponsMeleeList Auto Const Mandatory
 
 ObjectMod Property LegendaryWeapon3StarDespondent Auto Const Mandatory
+
+FormList Property AE_FilterList Auto Const Mandatory
