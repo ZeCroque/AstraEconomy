@@ -24,16 +24,86 @@ Event OnMenuOpenCloseEvent(string asMenuName, bool abOpening)
                 AstraRerollContainerRef.RemoveAllItems(Game.GetPlayer())
             Else
                 Result = 2
-                If Mode == 1
-                   DroppedItem.AttachMod(LegendaryWeapon1Star[Utility.RandomInt(0, LegendaryWeapon1Star.Length - 1)], 0)
-                ElseIf Mode == 2
-                    DroppedItem.AttachMod(LegendaryWeapon1Star[Utility.RandomInt(0, LegendaryWeapon1Star.Length - 1)], 0)
-                    DroppedItem.AttachMod(LegendaryWeapon2Star[Utility.RandomInt(0, LegendaryWeapon2Star.Length - 1)], 0)
+                If DroppedItem.HasKeyword(WeaponTypeRanged) || WeaponsMeleeList.HasForm(DroppedItem)
+                    Int i = LegendaryWeapon1Star.Length
+                    ObjectMod[] Legendary1Star = new ObjectMod[11]
+                    FillArray(Legendary1Star, LegendaryWeapon1Star)
+                    If DroppedItem.HasKeyword(WeaponTypeRanged)
+                        Legendary1Star[i] = LegendaryWeapon1StarBashing
+                        i += 1
+                        If !DroppedItem.HasKeyword(ma_Cutter) && !DroppedItem.HasKeyword(ma_Bridger)
+                            Legendary1Star[i] = LegendaryWeapon1StarExtendedMag
+                            i += 1
+                        EndIf
+                    ElseIf DroppedItem.HasKeyword(HasScope) || DroppedItem.HasKeyword(HasScopeRecon)
+                            Legendary1Star[i] = LegendaryWeapon1StarOxygenated
+                            i += 1
+                    ElseIf !DroppedItem.HasKeyword(WeaponTypeShotgun)
+                        Legendary1Star[i] = LegendaryWeapon1StarInstigating
+                        i += 1
+                    ElseIf !DroppedItem.HasKeyword(ma_RocketLauncher) &&  !DroppedItem.HasKeyword(ma_Cutter) && !DroppedItem.HasKeyword(ma_Bridger) &&  !DroppedItem.HasKeyword(ma_ArcWelder)
+                        Legendary1Star[i] = LegendaryWeapon1StarFurious
+                        i += 1
+                    EndIf
+
+                    i = LegendaryWeapon2Star.Length
+                    ObjectMod[] Legendary2Star = new ObjectMod[11]
+                    FillArray(Legendary2Star, LegendaryWeapon2Star)
+                    If DroppedItem.HasKeyword(WeaponTypeRanged)
+                        Legendary2Star[i] = LegendaryWeapon2StarHitman
+                        i += 1
+                    ElseIf !DroppedItem.HasKeyword(ma_Novablast)
+                        Legendary2Star[i] = LegendaryWeapon2StarLacerate
+                        i += 1
+                        Legendary2Star[i] = LegendaryWeapon2StarCorrosive
+                        i += 1
+                        Legendary2Star[i] = LegendaryWeapon2StarIncendiary
+                        i += 1
+                        Legendary2Star[i] = LegendaryWeapon2StarRadioactive
+                        i += 1
+                        Legendary2Star[i] = LegendaryWeapon2StarPoison
+                        i += 1
+                    ElseIf !DroppedItem.HasKeyword(WeaponTypeMelee) && !DroppedItem.HasKeyword(WeaponTypeLaser) && !DroppedItem.HasKeyword(WeaponTypeParticleBeam)
+                        Legendary2Star[i] = LegendaryWeapon2StarHandloading
+                        i += 1
+                    EndIf
+
+                    i = LegendaryWeapon3Star.Length
+                    ObjectMod[] Legendary3Star = new ObjectMod[10]
+                    FillArray(Legendary3Star, LegendaryWeapon3Star)
+                    If DroppedItem.HasKeyword(WeaponTypeRanged)
+                        Legendary3Star[i] = LegendaryWeapon3StarSkipShot
+                        i += 1
+                        If !DroppedItem.HasKeyword(ma_Novablast) && !DroppedItem.HasKeyword(ma_MagStorm) && !DroppedItem.HasKeyword(ma_MagShear) && !DroppedItem.HasKeyword(ma_MagPulse)
+                            Legendary3Star[i] = LegendaryWeapon3StarTesla
+                            i += 1
+                        EndIf
+                    ElseIf !DroppedItem.HasKeyword(ma_Novablast)
+                        Legendary3Star[i] = LegendaryWeapon3StarDespondent
+                        i += 1
+                        Legendary3Star[i] = LegendaryWeapon3StarFrenzy
+                        i += 1
+                        Legendary3Star[i] = LegendaryWeapon3StarElemental
+                        i += 1
+                    ElseIf !DroppedItem.HasKeyword(ma_Microgun) && !DroppedItem.HasKeyword(ma_MagStorm) && !DroppedItem.HasKeyword(ma_MagShear)
+                        Legendary3Star[i] = LegendaryWeapon3StarConcussive
+                        i += 1
+                    ElseIf !DroppedItem.HasKeyword(WeaponTypeMelee) && !DroppedItem.HasKeyword(ma_RocketLauncher) && !DroppedItem.HasKeyword(ma_Novablast) && !DroppedItem.HasKeyword(ma_Bridger) && !DroppedItem.HasKeyword(WeaponTypeToolGrip)  
+                        Legendary3Star[i] = LegendaryWeapon3StarExplosive
+                        i += 1
+                    ElseIf !DroppedItem.HasKeyword(WeaponTypeMelee) && !DroppedItem.HasKeyword(WeaponTypeExplosive) && !DroppedItem.HasKeyword(ma_Microgun) && !DroppedItem.HasKeyword(ma_MagStorm) && !DroppedItem.HasKeyword(ma_MagShear) && !DroppedItem.HasKeyword(ma_MagShot) && !DroppedItem.HasKeyword(ma_MagPulse) && !DroppedItem.HasKeyword(WeaponTypeShotgun) && !DroppedItem.HasKeyword(WeaponTypeToolGrip)  
+                        Legendary3Star[i] = LegendaryWeapon3StarOneInchPunch
+                        i += 1
+                    EndIf
+
+                    RerollMods(DroppedItem, Legendary1Star, Legendary2Star, Legendary3Star)
+                ElseIf(DroppedItem.HasKeyword(ArmorTypeSpacesuitBackpack))
+                    RerollMods(DroppedItem, LegendaryBackpack1Star, LegendaryBackpack2Star, LegendaryBackpack3Star)
+                ElseIf(DroppedItem.HasKeyword(ArmorTypeSpacesuitHelmet))
+                    RerollMods(DroppedItem, LegendaryHelmet1Star, LegendaryHelmet2Star, LegendaryHelmet3Star)
                 Else
-                    DroppedItem.AttachMod(LegendaryWeapon1Star[Utility.RandomInt(0, LegendaryWeapon1Star.Length - 1)], 0)
-                    DroppedItem.AttachMod(LegendaryWeapon2Star[Utility.RandomInt(0, LegendaryWeapon2Star.Length - 1)], 0)
-                    DroppedItem.AttachMod(LegendaryWeapon3Star[Utility.RandomInt(0, LegendaryWeapon3Star.Length - 1)], 0)
-                Endif
+                    RerollMods(DroppedItem, LegendarySuit1Star, LegendarySuit2Star, LegendarySuit3Star)
+                EndIf
             EndIf
             myPlayer.AddItem(DroppedItem, 1, true)
         Else  
@@ -41,6 +111,28 @@ Event OnMenuOpenCloseEvent(string asMenuName, bool abOpening)
         EndIf
     endif
 EndEvent
+
+Function FillArray(ObjectMod[] akArrayA, ObjectMod[] akArrayB)
+    Int i = 0
+    While i < akArrayB.Length
+        ObjectMod tmp = akArrayB[i]
+        akArrayA[i] = tmp
+        i += 1
+    EndWhile
+EndFunction
+
+Function RerollMods(ObjectReference akItem, ObjectMod[] akMods1Star, ObjectMod[] akMods2Star, ObjectMod[] akMods3Star)
+    If Mode == 1
+        akItem.AttachMod(akMods1Star[Utility.RandomInt(0, akMods1Star.Length - 1)], 0)
+    ElseIf Mode == 2
+        akItem.AttachMod(akMods1Star[Utility.RandomInt(0, akMods1Star.Length - 1)], 0)
+        akItem.AttachMod(akMods2Star[Utility.RandomInt(0, akMods2Star.Length - 1)], 0)
+    Else
+        akItem.AttachMod(akMods1Star[Utility.RandomInt(0, akMods1Star.Length - 1)], 0)
+        akItem.AttachMod(akMods2Star[Utility.RandomInt(0, akMods2Star.Length - 1)], 0)
+        akItem.AttachMod(akMods3Star[Utility.RandomInt(0, akMods3Star.Length - 1)], 0)
+    Endif
+EndFunction
 
 Function DoExchange()
     If(Mode > 0)
@@ -99,3 +191,87 @@ ObjectMod[] Property LegendaryBackpack1Star Auto Const Mandatory
 ObjectMod[] Property LegendaryBackpack2Star Auto Const Mandatory
 
 ObjectMod[] Property LegendaryBackpack3Star Auto Const Mandatory
+
+ObjectMod Property LegendaryWeapon1StarBashing Auto Const Mandatory
+
+ObjectMod Property LegendaryWeapon1StarExtendedMag Auto Const Mandatory
+
+ObjectMod Property LegendaryWeapon1StarOxygenated Auto Const Mandatory
+
+ObjectMod Property LegendaryWeapon1StarInstigating Auto Const Mandatory
+
+ObjectMod Property LegendaryWeapon1StarFurious Auto Const Mandatory
+
+ObjectMod Property LegendaryWeapon2StarHitman Auto Const Mandatory
+
+ObjectMod Property LegendaryWeapon2StarLacerate Auto Const Mandatory
+
+ObjectMod Property LegendaryWeapon2StarCorrosive Auto Const Mandatory
+
+ObjectMod Property LegendaryWeapon2StarIncendiary Auto Const Mandatory
+
+ObjectMod Property LegendaryWeapon2StarRadioactive Auto Const Mandatory
+
+ObjectMod Property LegendaryWeapon2StarPoison Auto Const Mandatory
+
+ObjectMod Property LegendaryWeapon2StarHandloading Auto Const Mandatory
+
+ObjectMod Property LegendaryWeapon3StarSkipShot Auto Const Mandatory
+
+ObjectMod Property LegendaryWeapon3StarTesla Auto Const Mandatory
+
+ObjectMod Property LegendaryWeapon3StarConcussive Auto Const Mandatory
+
+ObjectMod Property LegendaryWeapon3StarFrenzy Auto Const Mandatory
+
+ObjectMod Property LegendaryWeapon3StarExplosive Auto Const Mandatory
+
+ObjectMod Property LegendaryWeapon3StarOneInchPunch Auto Const Mandatory
+
+ObjectMod Property LegendaryWeapon3StarElemental Auto Const Mandatory
+
+Keyword Property WeaponTypeRanged Auto Const Mandatory
+
+Keyword Property WeaponTypeMelee Auto Const Mandatory
+
+Keyword Property HasScope Auto Const Mandatory
+
+Keyword Property HasScopeRecon Auto Const Mandatory
+
+Keyword Property ma_Cutter Auto Const Mandatory
+
+Keyword Property ma_Bridger Auto Const Mandatory
+
+Keyword Property WeaponTypeShotgun Auto Const Mandatory
+
+Keyword Property ma_RocketLauncher Auto Const Mandatory
+
+Keyword Property ma_ArcWelder Auto Const Mandatory
+
+Keyword Property ma_Novablast Auto Const Mandatory
+
+Keyword Property WeaponTypeLaser Auto Const Mandatory
+
+Keyword Property WeaponTypeParticleBeam Auto Const Mandatory
+
+Keyword Property ma_Microgun Auto Const Mandatory
+
+Keyword Property ma_MagStorm Auto Const Mandatory
+
+Keyword Property ma_MagShear Auto Const Mandatory
+
+Keyword Property WeaponTypeToolGrip Auto Const Mandatory
+
+Keyword Property WeaponTypeExplosive Auto Const Mandatory
+
+Keyword Property ma_MagShot Auto Const Mandatory
+
+Keyword Property ma_MagPulse Auto Const Mandatory
+
+Keyword Property ArmorTypeSpacesuitBackpack Auto Const Mandatory
+
+Keyword Property ArmorTypeSpacesuitHelmet Auto Const Mandatory
+
+FormList Property WeaponsMeleeList Auto Const Mandatory
+
+ObjectMod Property LegendaryWeapon3StarDespondent Auto Const Mandatory
