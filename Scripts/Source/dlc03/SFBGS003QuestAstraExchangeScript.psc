@@ -13,25 +13,30 @@ Guard AstraExchangeDataGuard ProtectsFunctionLogic
 
 Event OnMenuOpenCloseEvent(string asMenuName, bool abOpening)
     if(!abOpening)
-        Debug.Trace("nvdkj")
         Actor myPlayer = Game.GetPlayer()
         UnregisterForMenuOpenCloseEvent("ContainerMenu")
         ObjectReference DroppedItem = AstraRerollContainerRef.DropFirstObject()
         ObjectReference SecondDroppedItem = AstraRerollContainerRef.DropFirstObject()
         If(DroppedItem)
             If(SecondDroppedItem)
-                Debug.Trace("Too many item")
                 Result = 1
                 myPlayer.AddItem(SecondDroppedItem, 1, true)
                 AstraRerollContainerRef.RemoveAllItems(Game.GetPlayer())
             Else
-                Debug.Trace(DroppedItem)
-                DroppedItem.AttachMod(LegendaryMod, 0)
                 Result = 2
+                If Mode == 1
+                   DroppedItem.AttachMod(LegendaryWeapon1Star[Utility.RandomInt(0, LegendaryWeapon1Star.Length - 1)], 0)
+                ElseIf Mode == 2
+                    DroppedItem.AttachMod(LegendaryWeapon1Star[Utility.RandomInt(0, LegendaryWeapon1Star.Length - 1)], 0)
+                    DroppedItem.AttachMod(LegendaryWeapon2Star[Utility.RandomInt(0, LegendaryWeapon2Star.Length - 1)], 0)
+                Else
+                    DroppedItem.AttachMod(LegendaryWeapon1Star[Utility.RandomInt(0, LegendaryWeapon1Star.Length - 1)], 0)
+                    DroppedItem.AttachMod(LegendaryWeapon2Star[Utility.RandomInt(0, LegendaryWeapon2Star.Length - 1)], 0)
+                    DroppedItem.AttachMod(LegendaryWeapon3Star[Utility.RandomInt(0, LegendaryWeapon3Star.Length - 1)], 0)
+                Endif
             EndIf
             myPlayer.AddItem(DroppedItem, 1, true)
         Else  
-            Debug.Trace("No item")
             Result = 0
         EndIf
     endif
@@ -71,4 +76,26 @@ ObjectReference Property AstraRerollContainerRef Auto
 Int Property Result Auto Conditional
 Int Property Mode Auto
 
-ObjectMod Property LegendaryMod Auto Const Mandatory
+ObjectMod[] Property LegendaryWeapon1Star Auto Const Mandatory
+
+ObjectMod[] Property LegendaryWeapon2Star Auto Const Mandatory
+
+ObjectMod[] Property LegendaryWeapon3Star Auto Const Mandatory
+
+ObjectMod[] Property LegendaryHelmet1Star Auto Const Mandatory
+
+ObjectMod[] Property LegendaryHelmet2Star Auto Const Mandatory
+
+ObjectMod[] Property LegendaryHelmet3Star Auto Const Mandatory
+
+ObjectMod[] Property LegendarySuit1Star Auto Const Mandatory
+
+ObjectMod[] Property LegendarySuit2Star Auto Const Mandatory
+
+ObjectMod[] Property LegendarySuit3Star Auto Const Mandatory
+
+ObjectMod[] Property LegendaryBackpack1Star Auto Const Mandatory
+
+ObjectMod[] Property LegendaryBackpack2Star Auto Const Mandatory
+
+ObjectMod[] Property LegendaryBackpack3Star Auto Const Mandatory
