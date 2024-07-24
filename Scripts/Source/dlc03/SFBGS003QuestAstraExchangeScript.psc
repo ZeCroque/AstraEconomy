@@ -11,105 +11,172 @@ LeveledItem Property SFBGS003_LL_Astras_3Star Mandatory Const Auto
 
 Guard AstraExchangeDataGuard ProtectsFunctionLogic
 
+Function GiveBackItemsOfType(FormList akType, Int aiCount)
+    If aiCount > 0
+        Actor myPlayer = Game.GetPlayer()
+
+        Int i = 1
+        ObjectReference DroppedItem = AstraRerollContainerRef.DropFirstObject()
+        myPlayer.AddItem(DroppedItem)
+        While DroppedItem && i < aiCount
+            If(DroppedItem.HasKeywordInFormList(akType))
+                myPlayer.AddItem(DroppedItem)
+                i += 1
+            Else
+                DroppedItem = AstraRerollContainerRef.DropFirstObject()
+            EndIf
+        EndWhile
+    EndIf
+EndFunction
+
+;Method with the same name in ObjectReference does not work, so recoded it
+Int Function GetItemCountKeywords(FormList akKeywordList)
+    Int ItemCount = AstraRerollContainerRef.GetItemCount()
+    ObjectReference[] TempInventory = new ObjectReference[ItemCount]
+    ObjectReference DroppedItem = AstraRerollContainerRef.DropFirstObject()
+    Int i = 0
+    Int Count = 0
+    While DroppedItem
+        If(DroppedItem.HasKeywordInFormList(akKeywordList))
+            Count += 1
+        Endif
+        TempInventory[i] = DroppedItem
+        DroppedItem = AstraRerollContainerRef.DropFirstObject()
+        i += 1
+    EndWhile
+    i = 0
+    While i < ItemCount
+        AstraRerollContainerRef.AddItem(TempInventory[i])
+        i += 1
+    EndWhile
+    Return Count
+EndFunction
+
 Event OnMenuOpenCloseEvent(string asMenuName, bool abOpening)
     if(!abOpening)
         Actor myPlayer = Game.GetPlayer()
         UnregisterForMenuOpenCloseEvent("ContainerMenu")
-        ObjectReference DroppedItem = AstraRerollContainerRef.DropFirstObject()
-        ObjectReference SecondDroppedItem = AstraRerollContainerRef.DropFirstObject()
-        If(DroppedItem)
-            If(SecondDroppedItem)
-                Result = 1
-                myPlayer.AddItem(SecondDroppedItem, 1, true)
-                AstraRerollContainerRef.RemoveAllItems(Game.GetPlayer())
-            Else
-                Result = 2
-                If DroppedItem.HasKeyword(WeaponTypeRanged) || WeaponsMeleeList.HasForm(DroppedItem)
-                    Int i = LegendaryWeapon1Star.Length
-                    ObjectMod[] Legendary1Star = new ObjectMod[11]
-                    FillArray(Legendary1Star, LegendaryWeapon1Star)
-                    If DroppedItem.HasKeyword(WeaponTypeRanged)
-                        Legendary1Star[i] = LegendaryWeapon1StarBashing
-                        i += 1
-                        If !DroppedItem.HasKeyword(ma_Cutter) && !DroppedItem.HasKeyword(ma_Bridger)
-                            Legendary1Star[i] = LegendaryWeapon1StarExtendedMag
-                            i += 1
-                        EndIf
-                    ElseIf DroppedItem.HasKeyword(HasScope) || DroppedItem.HasKeyword(HasScopeRecon)
-                            Legendary1Star[i] = LegendaryWeapon1StarOxygenated
-                            i += 1
-                    ElseIf !DroppedItem.HasKeyword(WeaponTypeShotgun)
-                        Legendary1Star[i] = LegendaryWeapon1StarInstigating
-                        i += 1
-                    ElseIf !DroppedItem.HasKeyword(ma_RocketLauncher) &&  !DroppedItem.HasKeyword(ma_Cutter) && !DroppedItem.HasKeyword(ma_Bridger) &&  !DroppedItem.HasKeyword(ma_ArcWelder)
-                        Legendary1Star[i] = LegendaryWeapon1StarFurious
-                        i += 1
-                    EndIf
+        If Mode == 4
+            Int ThreeStarCount = GetItemCountKeywords(AE_Legendary3StarList)
+            Int TwoStarCount = GetItemCountKeywords(AE_Legendary2StarList) - ThreeStarCount
+            Int OneStarCount = GetItemCountKeywords(AE_Legendary1StarList) - ThreeStarCount - TwoStarCount
+            Int AstraCount = 0
 
-                    i = LegendaryWeapon2Star.Length
-                    ObjectMod[] Legendary2Star = new ObjectMod[11]
-                    FillArray(Legendary2Star, LegendaryWeapon2Star)
-                    If DroppedItem.HasKeyword(WeaponTypeRanged)
-                        Legendary2Star[i] = LegendaryWeapon2StarHitman
-                        i += 1
-                    ElseIf !DroppedItem.HasKeyword(ma_Novablast)
-                        Legendary2Star[i] = LegendaryWeapon2StarLacerate
-                        i += 1
-                        Legendary2Star[i] = LegendaryWeapon2StarCorrosive
-                        i += 1
-                        Legendary2Star[i] = LegendaryWeapon2StarIncendiary
-                        i += 1
-                        Legendary2Star[i] = LegendaryWeapon2StarRadioactive
-                        i += 1
-                        Legendary2Star[i] = LegendaryWeapon2StarPoison
-                        i += 1
-                    ElseIf !DroppedItem.HasKeyword(WeaponTypeMelee) && !DroppedItem.HasKeyword(WeaponTypeLaser) && !DroppedItem.HasKeyword(WeaponTypeParticleBeam)
-                        Legendary2Star[i] = LegendaryWeapon2StarHandloading
-                        i += 1
-                    EndIf
+            Int OneStarTripletsCount = OneStarCount / 3
+            AstraCount += OneStarTripletsCount
+            OneStarCount -= (OneStarTripletsCount * 3)
 
-                    i = LegendaryWeapon3Star.Length
-                    ObjectMod[] Legendary3Star = new ObjectMod[10]
-                    FillArray(Legendary3Star, LegendaryWeapon3Star)
-                    If DroppedItem.HasKeyword(WeaponTypeRanged)
-                        Legendary3Star[i] = LegendaryWeapon3StarSkipShot
-                        i += 1
-                        If !DroppedItem.HasKeyword(ma_Novablast) && !DroppedItem.HasKeyword(ma_MagStorm) && !DroppedItem.HasKeyword(ma_MagShear) && !DroppedItem.HasKeyword(ma_MagPulse)
-                            Legendary3Star[i] = LegendaryWeapon3StarTesla
-                            i += 1
-                        EndIf
-                    ElseIf !DroppedItem.HasKeyword(ma_Novablast)
-                        Legendary3Star[i] = LegendaryWeapon3StarDespondent
-                        i += 1
-                        Legendary3Star[i] = LegendaryWeapon3StarFrenzy
-                        i += 1
-                        Legendary3Star[i] = LegendaryWeapon3StarElemental
-                        i += 1
-                    ElseIf !DroppedItem.HasKeyword(ma_Microgun) && !DroppedItem.HasKeyword(ma_MagStorm) && !DroppedItem.HasKeyword(ma_MagShear)
-                        Legendary3Star[i] = LegendaryWeapon3StarConcussive
-                        i += 1
-                    ElseIf !DroppedItem.HasKeyword(WeaponTypeMelee) && !DroppedItem.HasKeyword(ma_RocketLauncher) && !DroppedItem.HasKeyword(ma_Novablast) && !DroppedItem.HasKeyword(ma_Bridger) && !DroppedItem.HasKeyword(WeaponTypeToolGrip)  
-                        Legendary3Star[i] = LegendaryWeapon3StarExplosive
-                        i += 1
-                    ElseIf !DroppedItem.HasKeyword(WeaponTypeMelee) && !DroppedItem.HasKeyword(WeaponTypeExplosive) && !DroppedItem.HasKeyword(ma_Microgun) && !DroppedItem.HasKeyword(ma_MagStorm) && !DroppedItem.HasKeyword(ma_MagShear) && !DroppedItem.HasKeyword(ma_MagShot) && !DroppedItem.HasKeyword(ma_MagPulse) && !DroppedItem.HasKeyword(WeaponTypeShotgun) && !DroppedItem.HasKeyword(WeaponTypeToolGrip)  
-                        Legendary3Star[i] = LegendaryWeapon3StarOneInchPunch
-                        i += 1
-                    EndIf
+            Int TwoStarTripletsCount = TwoStarCount / 3
+            AstraCount += TwoStarTripletsCount * 2
+            TwoStarCount -= (TwoStarTripletsCount * 3)
 
-                    RerollMods(DroppedItem, Legendary1Star, Legendary2Star, Legendary3Star)
-                ElseIf(DroppedItem.HasKeyword(ArmorTypeSpacesuitBackpack))
-                    RerollMods(DroppedItem, LegendaryBackpack1Star, LegendaryBackpack2Star, LegendaryBackpack3Star)
-                ElseIf(DroppedItem.HasKeyword(ArmorTypeSpacesuitHelmet))
-                    RerollMods(DroppedItem, LegendaryHelmet1Star, LegendaryHelmet2Star, LegendaryHelmet3Star)
+            Int OneStarTwoStarCombinationsCount = Math.Min(OneStarCount as Float, TwoStarCount as Float) as Int
+            AstraCount += OneStarTwoStarCombinationsCount
+            OneStarCount -= OneStarTwoStarCombinationsCount
+            TwoStarCount -= OneStarTwoStarCombinationsCount
+
+            AstraCount += ThreeStarCount
+
+            myPlayer.AddItem(Astra, AstraCount)
+            GiveBackItemsOfType(AE_Legendary1StarList, OneStarCount)
+            GiveBackItemsOfType(AE_Legendary2StarList, TwoStarCount)
+        Else
+            ObjectReference DroppedItem = AstraRerollContainerRef.DropFirstObject()
+            ObjectReference SecondDroppedItem = AstraRerollContainerRef.DropFirstObject()
+            If(DroppedItem)
+                If(SecondDroppedItem)
+                    Result = 1
+                    myPlayer.AddItem(SecondDroppedItem)
+                    AstraRerollContainerRef.RemoveAllItems(Game.GetPlayer())
                 Else
-                    RerollMods(DroppedItem, LegendarySuit1Star, LegendarySuit2Star, LegendarySuit3Star)
+                    Result = 2
+                    If DroppedItem.HasKeyword(WeaponTypeRanged) || WeaponsMeleeList.HasForm(DroppedItem)
+                        Int i = LegendaryWeapon1Star.Length
+                        ObjectMod[] Legendary1Star = new ObjectMod[11]
+                        FillArray(Legendary1Star, LegendaryWeapon1Star)
+                        If DroppedItem.HasKeyword(WeaponTypeRanged)
+                            Legendary1Star[i] = LegendaryWeapon1StarBashing
+                            i += 1
+                            If !DroppedItem.HasKeyword(ma_Cutter) && !DroppedItem.HasKeyword(ma_Bridger)
+                                Legendary1Star[i] = LegendaryWeapon1StarExtendedMag
+                                i += 1
+                            EndIf
+                        ElseIf DroppedItem.HasKeyword(HasScope) || DroppedItem.HasKeyword(HasScopeRecon)
+                                Legendary1Star[i] = LegendaryWeapon1StarOxygenated
+                                i += 1
+                        ElseIf !DroppedItem.HasKeyword(WeaponTypeShotgun)
+                            Legendary1Star[i] = LegendaryWeapon1StarInstigating
+                            i += 1
+                        ElseIf !DroppedItem.HasKeyword(ma_RocketLauncher) &&  !DroppedItem.HasKeyword(ma_Cutter) && !DroppedItem.HasKeyword(ma_Bridger) &&  !DroppedItem.HasKeyword(ma_ArcWelder)
+                            Legendary1Star[i] = LegendaryWeapon1StarFurious
+                            i += 1
+                        EndIf
+
+                        i = LegendaryWeapon2Star.Length
+                        ObjectMod[] Legendary2Star = new ObjectMod[11]
+                        FillArray(Legendary2Star, LegendaryWeapon2Star)
+                        If DroppedItem.HasKeyword(WeaponTypeRanged)
+                            Legendary2Star[i] = LegendaryWeapon2StarHitman
+                            i += 1
+                        ElseIf !DroppedItem.HasKeyword(ma_Novablast)
+                            Legendary2Star[i] = LegendaryWeapon2StarLacerate
+                            i += 1
+                            Legendary2Star[i] = LegendaryWeapon2StarCorrosive
+                            i += 1
+                            Legendary2Star[i] = LegendaryWeapon2StarIncendiary
+                            i += 1
+                            Legendary2Star[i] = LegendaryWeapon2StarRadioactive
+                            i += 1
+                            Legendary2Star[i] = LegendaryWeapon2StarPoison
+                            i += 1
+                        ElseIf !DroppedItem.HasKeyword(WeaponTypeMelee) && !DroppedItem.HasKeyword(WeaponTypeLaser) && !DroppedItem.HasKeyword(WeaponTypeParticleBeam)
+                            Legendary2Star[i] = LegendaryWeapon2StarHandloading
+                            i += 1
+                        EndIf
+
+                        i = LegendaryWeapon3Star.Length
+                        ObjectMod[] Legendary3Star = new ObjectMod[10]
+                        FillArray(Legendary3Star, LegendaryWeapon3Star)
+                        If DroppedItem.HasKeyword(WeaponTypeRanged)
+                            Legendary3Star[i] = LegendaryWeapon3StarSkipShot
+                            i += 1
+                            If !DroppedItem.HasKeyword(ma_Novablast) && !DroppedItem.HasKeyword(ma_MagStorm) && !DroppedItem.HasKeyword(ma_MagShear) && !DroppedItem.HasKeyword(ma_MagPulse)
+                                Legendary3Star[i] = LegendaryWeapon3StarTesla
+                                i += 1
+                            EndIf
+                        ElseIf !DroppedItem.HasKeyword(ma_Novablast)
+                            Legendary3Star[i] = LegendaryWeapon3StarDespondent
+                            i += 1
+                            Legendary3Star[i] = LegendaryWeapon3StarFrenzy
+                            i += 1
+                            Legendary3Star[i] = LegendaryWeapon3StarElemental
+                            i += 1
+                        ElseIf !DroppedItem.HasKeyword(ma_Microgun) && !DroppedItem.HasKeyword(ma_MagStorm) && !DroppedItem.HasKeyword(ma_MagShear)
+                            Legendary3Star[i] = LegendaryWeapon3StarConcussive
+                            i += 1
+                        ElseIf !DroppedItem.HasKeyword(WeaponTypeMelee) && !DroppedItem.HasKeyword(ma_RocketLauncher) && !DroppedItem.HasKeyword(ma_Novablast) && !DroppedItem.HasKeyword(ma_Bridger) && !DroppedItem.HasKeyword(WeaponTypeToolGrip)  
+                            Legendary3Star[i] = LegendaryWeapon3StarExplosive
+                            i += 1
+                        ElseIf !DroppedItem.HasKeyword(WeaponTypeMelee) && !DroppedItem.HasKeyword(WeaponTypeExplosive) && !DroppedItem.HasKeyword(ma_Microgun) && !DroppedItem.HasKeyword(ma_MagStorm) && !DroppedItem.HasKeyword(ma_MagShear) && !DroppedItem.HasKeyword(ma_MagShot) && !DroppedItem.HasKeyword(ma_MagPulse) && !DroppedItem.HasKeyword(WeaponTypeShotgun) && !DroppedItem.HasKeyword(WeaponTypeToolGrip)  
+                            Legendary3Star[i] = LegendaryWeapon3StarOneInchPunch
+                            i += 1
+                        EndIf
+
+                        RerollMods(DroppedItem, Legendary1Star, Legendary2Star, Legendary3Star)
+                    ElseIf(DroppedItem.HasKeyword(ArmorTypeSpacesuitBackpack))
+                        RerollMods(DroppedItem, LegendaryBackpack1Star, LegendaryBackpack2Star, LegendaryBackpack3Star)
+                    ElseIf(DroppedItem.HasKeyword(ArmorTypeSpacesuitHelmet))
+                        RerollMods(DroppedItem, LegendaryHelmet1Star, LegendaryHelmet2Star, LegendaryHelmet3Star)
+                    Else
+                        RerollMods(DroppedItem, LegendarySuit1Star, LegendarySuit2Star, LegendarySuit3Star)
+                    EndIf
                 EndIf
+                myPlayer.AddItem(DroppedItem)
+            Else  
+                Result = 0
             EndIf
-            myPlayer.AddItem(DroppedItem, 1, true)
-        Else  
-            Result = 0
-        EndIf
-    endif
+        Endif
+    EndIf
 EndEvent
 
 Function FillArray(ObjectMod[] akArrayA, ObjectMod[] akArrayB)
@@ -134,14 +201,23 @@ Function RerollMods(ObjectReference akItem, ObjectMod[] akMods1Star, ObjectMod[]
     Endif
 EndFunction
 
-Function DoExchange()
+Function DoReroll()
     If(Mode > 0)
-        If(!AstraRerollContainerRef)
+        ;If(!AstraRerollContainerRef)
             AstraRerollContainerRef = Game.GetPlayer().PlaceAtMe(AE_TAHQ_Stache_Vendor_WorkContainer)
-        EndIf
+        ;EndIf
         RegisterForMenuOpenCloseEvent("ContainerMenu")
-        AstraRerollContainerRef.OpenOneWayTransferMenu(true, AE_FilterList)
+        AstraRerollContainerRef.OpenOneWayTransferMenu(true, AE_EquipmentList)
     EndIf
+EndFunction
+
+Function DoExchange()
+    ;If(!AstraRerollContainerRef)
+        AstraRerollContainerRef = Game.GetPlayer().PlaceAtMe(AE_TAHQ_Stache_Vendor_WorkContainer)
+    ;EndIf
+    Mode = 4
+    RegisterForMenuOpenCloseEvent("ContainerMenu")
+    AstraRerollContainerRef.OpenOneWayTransferMenu(true, AE_LegendaryList) ;TODO legendary items list
 EndFunction
 
 ;When called, checks to make sure the player has the required number of Astras, then gives the appropriate level of of item.
@@ -276,4 +352,12 @@ FormList Property WeaponsMeleeList Auto Const Mandatory
 
 ObjectMod Property LegendaryWeapon3StarDespondent Auto Const Mandatory
 
-FormList Property AE_FilterList Auto Const Mandatory
+FormList Property AE_EquipmentList Auto Const Mandatory
+
+FormList Property AE_LegendaryList Auto Const Mandatory
+FormList Property AE_Legendary1StarList Auto Const Mandatory
+
+
+FormList Property AE_Legendary2StarList Auto Const Mandatory
+
+FormList Property AE_Legendary3StarList Auto Const Mandatory

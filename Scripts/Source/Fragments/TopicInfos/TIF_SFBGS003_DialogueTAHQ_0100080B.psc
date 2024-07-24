@@ -8,7 +8,7 @@ Actor akSpeaker = akSpeakerRef as Actor
 dlc03:sfbgs003questastraexchangescript kmyQuest = GetOwningQuest() as dlc03:sfbgs003questastraexchangescript
 ;END AUTOCAST
 ;BEGIN CODE
-kmyQuest.DoExchange()
+kmyQuest.DoReroll()
 ;END CODE
 EndFunction
 ;END FRAGMENT
