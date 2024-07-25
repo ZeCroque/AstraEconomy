@@ -11,45 +11,79 @@ LeveledItem Property SFBGS003_LL_Astras_3Star Mandatory Const Auto
 
 Guard AstraExchangeDataGuard ProtectsFunctionLogic
 
-Function GiveBackItemsOfType(FormList akType, Int aiCount)
-    If aiCount > 0
-        Actor myPlayer = Game.GetPlayer()
+ObjectReference[] Inventory
 
-        Int i = 1
-        ObjectReference DroppedItem = AstraRerollContainerRef.DropFirstObject()
-        myPlayer.AddItem(DroppedItem)
-        While DroppedItem && i < aiCount
-            If(DroppedItem.HasKeywordInFormList(akType))
-                myPlayer.AddItem(DroppedItem)
-                i += 1
+Function GiveBackItemsOfType(FormList akType, Int aiCount) ;Rename
+    If aiCount > 0
+        Int i = 0
+        Int j = 0
+        While i < Inventory.Length && (Inventory[i])
+            If(j < aiCount && Inventory[i].HasKeywordInFormList(akType))
+                AstraRerollContainerRef.AddItem(Inventory[i])
+                j += 1
             Else
-                DroppedItem = AstraRerollContainerRef.DropFirstObject()
+                Inventory[i].Delete()
             EndIf
+            i += 1
         EndWhile
     EndIf
 EndFunction
 
 ;Method with the same name in ObjectReference does not work, so recoded it
 Int Function GetItemCountKeywords(FormList akKeywordList)
-    Int ItemCount = AstraRerollContainerRef.GetItemCount()
-    ObjectReference[] TempInventory = new ObjectReference[ItemCount]
-    ObjectReference DroppedItem = AstraRerollContainerRef.DropFirstObject()
     Int i = 0
     Int Count = 0
-    While DroppedItem
-        If(DroppedItem.HasKeywordInFormList(akKeywordList))
+    While i < Inventory.Length && Inventory[i]
+        If(Inventory[i].HasKeywordInFormList(akKeywordList))
             Count += 1
         Endif
-        TempInventory[i] = DroppedItem
-        DroppedItem = AstraRerollContainerRef.DropFirstObject()
-        i += 1
-    EndWhile
-    i = 0
-    While i < ItemCount
-        AstraRerollContainerRef.AddItem(TempInventory[i])
         i += 1
     EndWhile
     Return Count
+EndFunction
+
+Int Function DumpItems()  ;Also handles 3stars
+    Inventory = new ObjectReference[Math.Min(128.0, AstraRerollContainerRef.GetItemCount() as Float) as Int]
+
+    Int AstraCount = 0
+    Int i = 0
+    ObjectReference DroppedItem = AstraRerollContainerRef.DropFirstObject()
+    While DroppedItem
+        If(DroppedItem.HasKeywordInFormList(AE_Legendary3StarList))
+            DroppedItem.Delete()
+            AstraCount += 1
+        Else
+            Inventory[i] = DroppedItem
+            i += 1
+        Endif
+        DroppedItem = AstraRerollContainerRef.DropFirstObject()
+    EndWhile
+    Return AstraCount
+EndFunction
+
+Int Function RecycleItems()
+    Int AstraCount = DumpItems() 
+
+    Int TwoStarCount = GetItemCountKeywords(AE_Legendary2StarList)
+    Int OneStarCount = GetItemCountKeywords(AE_Legendary1StarList) - TwoStarCount
+
+    Int OneStarTripletsCount = OneStarCount / 3
+    AstraCount += OneStarTripletsCount
+    OneStarCount -= (OneStarTripletsCount * 3)
+
+    Int TwoStarTripletsCount = TwoStarCount / 3
+    AstraCount += TwoStarTripletsCount * 2
+    TwoStarCount -= (TwoStarTripletsCount * 3)
+
+    Int OneStarTwoStarCombinationsCount = Math.Min(OneStarCount as Float, TwoStarCount as Float) as Int
+    AstraCount += OneStarTwoStarCombinationsCount
+    OneStarCount -= OneStarTwoStarCombinationsCount
+    TwoStarCount -= OneStarTwoStarCombinationsCount
+
+    GiveBackItemsOfType(AE_Legendary1StarList, OneStarCount)
+    GiveBackItemsOfType(AE_Legendary2StarList, TwoStarCount)
+
+    Return AstraCount
 EndFunction
 
 Event OnMenuOpenCloseEvent(string asMenuName, bool abOpening)
@@ -57,29 +91,15 @@ Event OnMenuOpenCloseEvent(string asMenuName, bool abOpening)
         Actor myPlayer = Game.GetPlayer()
         UnregisterForMenuOpenCloseEvent("ContainerMenu")
         If Mode == 4
-            Int ThreeStarCount = GetItemCountKeywords(AE_Legendary3StarList)
-            Int TwoStarCount = GetItemCountKeywords(AE_Legendary2StarList) - ThreeStarCount
-            Int OneStarCount = GetItemCountKeywords(AE_Legendary1StarList) - ThreeStarCount - TwoStarCount
-            Int AstraCount = 0
+            Int AstraTotal = 0
 
-            Int OneStarTripletsCount = OneStarCount / 3
-            AstraCount += OneStarTripletsCount
-            OneStarCount -= (OneStarTripletsCount * 3)
-
-            Int TwoStarTripletsCount = TwoStarCount / 3
-            AstraCount += TwoStarTripletsCount * 2
-            TwoStarCount -= (TwoStarTripletsCount * 3)
-
-            Int OneStarTwoStarCombinationsCount = Math.Min(OneStarCount as Float, TwoStarCount as Float) as Int
-            AstraCount += OneStarTwoStarCombinationsCount
-            OneStarCount -= OneStarTwoStarCombinationsCount
-            TwoStarCount -= OneStarTwoStarCombinationsCount
-
-            AstraCount += ThreeStarCount
-
-            myPlayer.AddItem(Astra, AstraCount)
-            GiveBackItemsOfType(AE_Legendary1StarList, OneStarCount)
-            GiveBackItemsOfType(AE_Legendary2StarList, TwoStarCount)
+            Int AstraCount = RecycleItems()
+            While(AstraCount > 0)
+                AstraTotal += AstraCount
+                AstraCount = RecycleItems()
+            EndWhile
+            myPlayer.AddItem(Astra, AstraTotal)
+            AstraRerollContainerRef.RemoveAllItems(myPlayer)
         Else
             ObjectReference DroppedItem = AstraRerollContainerRef.DropFirstObject()
             ObjectReference SecondDroppedItem = AstraRerollContainerRef.DropFirstObject()
@@ -203,18 +223,18 @@ EndFunction
 
 Function DoReroll()
     If(Mode > 0)
-        ;If(!AstraRerollContainerRef)
+        If(!AstraRerollContainerRef)
             AstraRerollContainerRef = Game.GetPlayer().PlaceAtMe(AE_TAHQ_Stache_Vendor_WorkContainer)
-        ;EndIf
+        EndIf
         RegisterForMenuOpenCloseEvent("ContainerMenu")
         AstraRerollContainerRef.OpenOneWayTransferMenu(true, AE_EquipmentList)
     EndIf
 EndFunction
 
 Function DoExchange()
-    ;If(!AstraRerollContainerRef)
+    If(!AstraRerollContainerRef)
         AstraRerollContainerRef = Game.GetPlayer().PlaceAtMe(AE_TAHQ_Stache_Vendor_WorkContainer)
-    ;EndIf
+    EndIf
     Mode = 4
     RegisterForMenuOpenCloseEvent("ContainerMenu")
     AstraRerollContainerRef.OpenOneWayTransferMenu(true, AE_LegendaryList) ;TODO legendary items list
