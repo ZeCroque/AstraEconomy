@@ -39,18 +39,18 @@ Event OnMenuOpenCloseEvent(string asMenuName, bool abOpening)
             Else
                 Result = 2
                 ObjectReference DroppedItem = WorkContainer.DropFirstObject()
-                If DroppedItem.HasKeyword(WeaponTypeRanged) || WeaponsMeleeList.HasForm(DroppedItem)
+                If DroppedItem.HasKeyword(WeaponTypeRanged) || WeaponsMeleeList.HasForm(DroppedItem.GetBaseObject())
                     ObjectMod[] FilteredLegendaryWeapon1Star = new ObjectMod[11]
                     ObjectMod[] FilteredLegendaryWeapon2Star = new ObjectMod[11]
                     ObjectMod[] FilteredLegendaryWeapon3Star = new ObjectMod[10]
                     GetLegendaryModsForWeapon(DroppedItem, FilteredLegendaryWeapon1Star, FilteredLegendaryWeapon2Star, FilteredLegendaryWeapon3Star)
-                    RerollMods(DroppedItem, FilteredLegendaryWeapon1Star, FilteredLegendaryWeapon2Star, FilteredLegendaryWeapon3Star)
+                    RerollMods(DroppedItem, FilteredLegendaryWeapon1Star, FilteredLegendaryWeapon1StarLength, FilteredLegendaryWeapon2Star, FilteredLegendaryWeapon2StarLength, FilteredLegendaryWeapon3Star, FilteredLegendaryWeapon3StarLength)
                 ElseIf(DroppedItem.HasKeyword(ArmorTypeSpacesuitBackpack))
-                    RerollMods(DroppedItem, LegendaryBackpack1Star, LegendaryBackpack2Star, LegendaryBackpack3Star)
+                    RerollMods(DroppedItem, LegendaryBackpack1Star, LegendaryBackpack1Star.Length, LegendaryBackpack2Star, LegendaryBackpack2Star.Length, LegendaryBackpack3Star, LegendaryBackpack3Star.Length)
                 ElseIf(DroppedItem.HasKeyword(ArmorTypeSpacesuitHelmet))
-                    RerollMods(DroppedItem, LegendaryHelmet1Star, LegendaryHelmet2Star, LegendaryHelmet3Star)
+                    RerollMods(DroppedItem, LegendaryHelmet1Star, LegendaryHelmet1Star.Length, LegendaryHelmet2Star, LegendaryHelmet2Star.Length, LegendaryHelmet3Star, LegendaryHelmet3Star.Length)
                 Else
-                    RerollMods(DroppedItem, LegendarySuit1Star, LegendarySuit2Star, LegendarySuit3Star)
+                    RerollMods(DroppedItem, LegendarySuit1Star, LegendarySuit1Star.Length, LegendarySuit2Star, LegendarySuit2Star.Length, LegendarySuit3Star, LegendarySuit3Star.Length)
                 EndIf
                 myPlayer.AddItem(DroppedItem)
             EndIf
@@ -221,6 +221,10 @@ ObjectMod Property LegendaryWeapon3StarOneInchPunch Auto Const Mandatory
 ObjectMod Property LegendaryWeapon3StarSkipShot Auto Const Mandatory
 ObjectMod Property LegendaryWeapon3StarTesla Auto Const Mandatory
 
+Int FilteredLegendaryWeapon1StarLength
+Int FilteredLegendaryWeapon2StarLength
+Int FilteredLegendaryWeapon3StarLength
+
 ;When called, checks to make sure the player has the required number of Astras, and update mode that will dialog output and be used by further entry points
 Function AstraExchange(Int aiAstras)
     LockGuard AstraExchangeDataGuard
@@ -279,6 +283,7 @@ Function GetLegendaryModsForWeapon(ObjectReference akItem, ObjectMod[] Legendary
         Legendary1Star[i] = LegendaryWeapon1StarFurious
         i += 1
     EndIf
+    FilteredLegendaryWeapon1StarLength = i
 
     i = LegendaryWeapon2Star.Length
     FillArray(Legendary2Star, LegendaryWeapon2Star)
@@ -300,6 +305,7 @@ Function GetLegendaryModsForWeapon(ObjectReference akItem, ObjectMod[] Legendary
         Legendary2Star[i] = LegendaryWeapon2StarHandloading
         i += 1
     EndIf
+    FilteredLegendaryWeapon2StarLength = i
 
     i = LegendaryWeapon3Star.Length
     FillArray(Legendary3Star, LegendaryWeapon3Star)
@@ -327,17 +333,18 @@ Function GetLegendaryModsForWeapon(ObjectReference akItem, ObjectMod[] Legendary
         Legendary3Star[i] = LegendaryWeapon3StarOneInchPunch
         i += 1
     EndIf
+    FilteredLegendaryWeapon3StarLength = i
 EndFunction
 
-Function RerollMods(ObjectReference akItem, ObjectMod[] akMods1Star, ObjectMod[] akMods2Star, ObjectMod[] akMods3Star)
+Function RerollMods(ObjectReference akItem, ObjectMod[] akMods1Star, Int aiMods1StarLength, ObjectMod[] akMods2Star, Int aiMods2StarLength, ObjectMod[] akMods3Star, Int aiMods3StarLength)
     If Mode == 1
-        akItem.AttachMod(akMods1Star[Utility.RandomInt(0, akMods1Star.Length - 1)], 0)
+        akItem.AttachMod(akMods1Star[Utility.RandomInt(0, aiMods1StarLength - 1)], 0)
     ElseIf Mode == 2
-        akItem.AttachMod(akMods1Star[Utility.RandomInt(0, akMods1Star.Length - 1)], 0)
-        akItem.AttachMod(akMods2Star[Utility.RandomInt(0, akMods2Star.Length - 1)], 0)
+        akItem.AttachMod(akMods1Star[Utility.RandomInt(0, aiMods1StarLength - 1)], 0)
+        akItem.AttachMod(akMods2Star[Utility.RandomInt(0, aiMods2StarLength - 1)], 0)
     Else
-        akItem.AttachMod(akMods1Star[Utility.RandomInt(0, akMods1Star.Length - 1)], 0)
-        akItem.AttachMod(akMods2Star[Utility.RandomInt(0, akMods2Star.Length - 1)], 0)
-        akItem.AttachMod(akMods3Star[Utility.RandomInt(0, akMods3Star.Length - 1)], 0)
+        akItem.AttachMod(akMods1Star[Utility.RandomInt(0, aiMods1StarLength - 1)], 0)
+        akItem.AttachMod(akMods2Star[Utility.RandomInt(0, aiMods2StarLength - 1)], 0)
+        akItem.AttachMod(akMods3Star[Utility.RandomInt(0, aiMods3StarLength - 1)], 0)
     Endif
 EndFunction
