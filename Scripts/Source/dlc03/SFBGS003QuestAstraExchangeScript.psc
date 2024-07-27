@@ -29,6 +29,7 @@ Event OnMenuOpenCloseEvent(string asMenuName, bool abOpening)
         Actor myPlayer = Game.GetPlayer()
         UnregisterForMenuOpenCloseEvent("ContainerMenu")
         If Mode == 4
+            Game.FadeOutGame(true, true, 0, 1.0, true)
             Int AstraTotal = 0
             Int AstraCount = RecycleItems()
             While(AstraCount > 0)
@@ -37,6 +38,7 @@ Event OnMenuOpenCloseEvent(string asMenuName, bool abOpening)
             EndWhile
             myPlayer.AddItem(Astra, AstraTotal)
             WorkContainer.RemoveAllItems(myPlayer)
+            Game.FadeOutGame(false, true, 0, 1.0, false)
         Else
             Int ItemCount = WorkContainer.GetItemCount() 
             If(ItemCount == 0)
