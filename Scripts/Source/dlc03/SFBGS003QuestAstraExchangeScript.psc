@@ -47,8 +47,8 @@ Int Function DumpItems()  ;Also handles 3stars
 
     Int AstraCount = 0
     Int i = 0
-    ObjectReference DroppedItem = AstraRerollContainerRef.DropFirstObject()
-    While DroppedItem
+    While AstraRerollContainerRef.GetItemCount() > 0 
+        ObjectReference DroppedItem = AstraRerollContainerRef.DropFirstObject()
         If(DroppedItem.HasKeywordInFormList(AE_Legendary3StarList))
             DroppedItem.Delete()
             AstraCount += 1
@@ -56,7 +56,6 @@ Int Function DumpItems()  ;Also handles 3stars
             Inventory[i] = DroppedItem
             i += 1
         Endif
-        DroppedItem = AstraRerollContainerRef.DropFirstObject()
     EndWhile
     Return AstraCount
 EndFunction
