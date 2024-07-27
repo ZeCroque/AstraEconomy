@@ -11,25 +11,110 @@ LeveledItem Property SFBGS003_LL_Astras_3Star Mandatory Const Auto
 
 Guard AstraExchangeDataGuard ProtectsFunctionLogic
 
-ObjectReference[] Inventory
+;### Main
 
-Function GiveBackItemsOfType(FormList akType, Int aiCount) ;Rename
-    If aiCount > 0
-        Int i = 0
-        Int j = 0
-        While i < Inventory.Length && (Inventory[i])
-            If(j < aiCount && Inventory[i].HasKeywordInFormList(akType))
-                AstraRerollContainerRef.AddItem(Inventory[i])
-                j += 1
+Container Property AE_TAHQ_Stache_Vendor_WorkContainer Auto Const Mandatory
+ObjectReference WorkContainer
+
+Keyword Property WeaponTypeRanged Auto Const Mandatory
+FormList Property WeaponsMeleeList Auto Const Mandatory
+Keyword Property ArmorTypeSpacesuitBackpack Auto Const Mandatory
+Keyword Property ArmorTypeSpacesuitHelmet Auto Const Mandatory
+
+Int Mode
+Int Property Result Auto Conditional
+
+Event OnMenuOpenCloseEvent(string asMenuName, bool abOpening)
+    if(!abOpening)
+        Actor myPlayer = Game.GetPlayer()
+        UnregisterForMenuOpenCloseEvent("ContainerMenu")
+        If Mode == 4
+            Int AstraTotal = 0
+            Int AstraCount = RecycleItems()
+            While(AstraCount > 0)
+                AstraTotal += AstraCount
+                AstraCount = RecycleItems()
+            EndWhile
+            myPlayer.AddItem(Astra, AstraTotal)
+            WorkContainer.RemoveAllItems(myPlayer)
+        Else
+            Int ItemCount = WorkContainer.GetItemCount() 
+            If(ItemCount == 0)
+                Result = 0
+            ElseIf(ItemCount > 1)
+                Result = 1
             Else
-                Inventory[i].Delete()
+                Result = 2
+                ObjectReference DroppedItem = WorkContainer.DropFirstObject()
+                If DroppedItem.HasKeyword(WeaponTypeRanged) || WeaponsMeleeList.HasForm(DroppedItem)
+                    ObjectMod[] FilteredLegendaryWeapon1Star = new ObjectMod[11]
+                    ObjectMod[] FilteredLegendaryWeapon2Star = new ObjectMod[11]
+                    ObjectMod[] FilteredLegendaryWeapon3Star = new ObjectMod[10]
+                    GetLegendaryModsForWeapon(DroppedItem, FilteredLegendaryWeapon1Star, FilteredLegendaryWeapon2Star, FilteredLegendaryWeapon3Star)
+                    RerollMods(DroppedItem, FilteredLegendaryWeapon1Star, FilteredLegendaryWeapon2Star, FilteredLegendaryWeapon3Star)
+                ElseIf(DroppedItem.HasKeyword(ArmorTypeSpacesuitBackpack))
+                    RerollMods(DroppedItem, LegendaryBackpack1Star, LegendaryBackpack2Star, LegendaryBackpack3Star)
+                ElseIf(DroppedItem.HasKeyword(ArmorTypeSpacesuitHelmet))
+                    RerollMods(DroppedItem, LegendaryHelmet1Star, LegendaryHelmet2Star, LegendaryHelmet3Star)
+                Else
+                    RerollMods(DroppedItem, LegendarySuit1Star, LegendarySuit2Star, LegendarySuit3Star)
+                EndIf
+                myPlayer.AddItem(DroppedItem)
             EndIf
-            i += 1
-        EndWhile
+            WorkContainer.RemoveAllItems(Game.GetPlayer())
+        Endif
+    EndIf
+EndEvent
+
+Function DoReroll()
+    If(Mode > 0)
+        If(!WorkContainer)
+            WorkContainer = Game.GetPlayer().PlaceAtMe(AE_TAHQ_Stache_Vendor_WorkContainer, 1, true)
+        EndIf
+        RegisterForMenuOpenCloseEvent("ContainerMenu")
+        WorkContainer.OpenOneWayTransferMenu(true, AE_EquipmentList)
     EndIf
 EndFunction
 
-;Method with the same name in ObjectReference does not work, so recoded it
+Function DoExchange()
+    If(!WorkContainer)
+        WorkContainer = Game.GetPlayer().PlaceAtMe(AE_TAHQ_Stache_Vendor_WorkContainer, 1, true)
+    EndIf
+    Mode = 4
+    RegisterForMenuOpenCloseEvent("ContainerMenu")
+    WorkContainer.OpenOneWayTransferMenu(true, AE_LegendaryList)
+EndFunction
+
+;When called, checks to make sure the player has the required number of Astras, and update mode that will dialog output and be used by further entry points
+Function AstraExchange(Int aiAstras)
+    LockGuard AstraExchangeDataGuard
+        Actor myPlayer = Game.GetPlayer()
+        If myPlayer.GetItemCount(Astra) >= aiAstras
+            If aiAstras == SFBGS003_Astras_SmallAmount.GetValue()
+                Mode = 1
+            ElseIf aiAstras == SFBGS003_Astras_MedAmount.GetValue()
+                Mode = 2
+            ElseIf aiAstras == SFBGS003_Astras_LargeAmount.GetValue()
+                Mode = 3
+            EndIf
+        Else
+            Mode = 0
+            SFBGS003_AstrasErrorMSG.Show()
+        EndIf
+    EndLockGuard
+EndFunction
+
+;### Cycling
+
+FormList Property AE_EquipmentList Auto Const Mandatory
+FormList Property AE_LegendaryList Auto Const Mandatory
+FormList Property AE_Legendary1StarList Auto Const Mandatory
+FormList Property AE_Legendary2StarList Auto Const Mandatory
+FormList Property AE_Legendary3StarList Auto Const Mandatory
+
+ObjectReference[] Inventory
+
+;Method with the same name in ObjectReference does not work, so remade it
 Int Function GetItemCountKeywords(FormList akKeywordList)
     Int i = 0
     Int Count = 0
@@ -42,13 +127,29 @@ Int Function GetItemCountKeywords(FormList akKeywordList)
     Return Count
 EndFunction
 
+Function CleanDumpedItems(FormList akType, Int aiCountToKeep)
+    If aiCountToKeep > 0
+        Int i = 0
+        Int j = 0
+        While i < Inventory.Length && (Inventory[i])
+            If(j < aiCountToKeep && Inventory[i].HasKeywordInFormList(akType))
+                WorkContainer.AddItem(Inventory[i])
+                j += 1
+            Else
+                Inventory[i].Delete()
+            EndIf
+            i += 1
+        EndWhile
+    EndIf
+EndFunction
+
 Int Function DumpItems()  ;Also handles 3stars
-    Inventory = new ObjectReference[Math.Min(128.0, AstraRerollContainerRef.GetItemCount() as Float) as Int]
+    Inventory = new ObjectReference[Math.Min(128.0, WorkContainer.GetItemCount() as Float) as Int]
 
     Int AstraCount = 0
     Int i = 0
-    While AstraRerollContainerRef.GetItemCount() > 0 
-        ObjectReference DroppedItem = AstraRerollContainerRef.DropFirstObject()
+    While WorkContainer.GetItemCount() > 0 
+        ObjectReference DroppedItem = WorkContainer.DropFirstObject()
         If(DroppedItem.HasKeywordInFormList(AE_Legendary3StarList))
             DroppedItem.Delete()
             AstraCount += 1
@@ -79,53 +180,68 @@ Int Function RecycleItems()
     OneStarCount -= OneStarTwoStarCombinationsCount
     TwoStarCount -= OneStarTwoStarCombinationsCount
 
-    GiveBackItemsOfType(AE_Legendary1StarList, OneStarCount)
-    GiveBackItemsOfType(AE_Legendary2StarList, TwoStarCount)
+    CleanDumpedItems(AE_Legendary1StarList, OneStarCount)
+    CleanDumpedItems(AE_Legendary2StarList, TwoStarCount)
 
     Return AstraCount
 EndFunction
 
-Event OnMenuOpenCloseEvent(string asMenuName, bool abOpening)
-    if(!abOpening)
-        Actor myPlayer = Game.GetPlayer()
-        UnregisterForMenuOpenCloseEvent("ContainerMenu")
-        If Mode == 4
-            Int AstraTotal = 0
-            Int AstraCount = RecycleItems()
-            While(AstraCount > 0)
-                AstraTotal += AstraCount
-                AstraCount = RecycleItems()
-            EndWhile
-            myPlayer.AddItem(Astra, AstraTotal)
-            AstraRerollContainerRef.RemoveAllItems(myPlayer)
-        Else
-            Int ItemCount = AstraRerollContainerRef.GetItemCount() 
-            If(ItemCount == 0)
-                Result = 0
-            ElseIf(ItemCount > 1)
-                Result = 1
-            Else
-                Result = 2
-                ObjectReference DroppedItem = AstraRerollContainerRef.DropFirstObject()
-                If DroppedItem.HasKeyword(WeaponTypeRanged) || WeaponsMeleeList.HasForm(DroppedItem)
-                    ObjectMod[] FilteredLegendaryWeapon1Star = new ObjectMod[11]
-                    ObjectMod[] FilteredLegendaryWeapon2Star = new ObjectMod[11]
-                    ObjectMod[] FilteredLegendaryWeapon3Star = new ObjectMod[10]
-                    GetLegendaryModsForWeapon(DroppedItem, FilteredLegendaryWeapon1Star, FilteredLegendaryWeapon2Star, FilteredLegendaryWeapon3Star)
-                    RerollMods(DroppedItem, FilteredLegendaryWeapon1Star, FilteredLegendaryWeapon2Star, FilteredLegendaryWeapon3Star)
-                ElseIf(DroppedItem.HasKeyword(ArmorTypeSpacesuitBackpack))
-                    RerollMods(DroppedItem, LegendaryBackpack1Star, LegendaryBackpack2Star, LegendaryBackpack3Star)
-                ElseIf(DroppedItem.HasKeyword(ArmorTypeSpacesuitHelmet))
-                    RerollMods(DroppedItem, LegendaryHelmet1Star, LegendaryHelmet2Star, LegendaryHelmet3Star)
-                Else
-                    RerollMods(DroppedItem, LegendarySuit1Star, LegendarySuit2Star, LegendarySuit3Star)
-                EndIf
-                myPlayer.AddItem(DroppedItem)
-            EndIf
-            AstraRerollContainerRef.RemoveAllItems(Game.GetPlayer())
-        Endif
-    EndIf
-EndEvent
+;### Rerolling
+
+ObjectMod[] Property LegendaryHelmet1Star Auto Const Mandatory
+ObjectMod[] Property LegendaryHelmet2Star Auto Const Mandatory
+ObjectMod[] Property LegendaryHelmet3Star Auto Const Mandatory
+
+ObjectMod[] Property LegendarySuit1Star Auto Const Mandatory
+ObjectMod[] Property LegendarySuit2Star Auto Const Mandatory
+ObjectMod[] Property LegendarySuit3Star Auto Const Mandatory
+
+ObjectMod[] Property LegendaryBackpack1Star Auto Const Mandatory
+ObjectMod[] Property LegendaryBackpack2Star Auto Const Mandatory
+ObjectMod[] Property LegendaryBackpack3Star Auto Const Mandatory
+
+Keyword Property WeaponTypeLaser Auto Const Mandatory
+Keyword Property WeaponTypeParticleBeam Auto Const Mandatory
+Keyword Property WeaponTypeShotgun Auto Const Mandatory
+Keyword Property WeaponTypeExplosive Auto Const Mandatory
+Keyword Property WeaponTypeToolGrip Auto Const Mandatory
+Keyword Property WeaponTypeMelee Auto Const Mandatory
+Keyword Property HasScope Auto Const Mandatory
+Keyword Property HasScopeRecon Auto Const Mandatory
+Keyword Property ma_ArcWelder Auto Const Mandatory
+Keyword Property ma_Bridger Auto Const Mandatory
+Keyword Property ma_Cutter Auto Const Mandatory
+Keyword Property ma_MagPulse Auto Const Mandatory
+Keyword Property ma_MagShear Auto Const Mandatory
+Keyword Property ma_MagShot Auto Const Mandatory
+Keyword Property ma_MagStorm Auto Const Mandatory
+Keyword Property ma_Microgun Auto Const Mandatory
+Keyword Property ma_Novablast Auto Const Mandatory
+Keyword Property ma_RocketLauncher Auto Const Mandatory
+
+ObjectMod[] Property LegendaryWeapon1Star Auto Const Mandatory
+ObjectMod Property LegendaryWeapon1StarBashing Auto Const Mandatory
+ObjectMod Property LegendaryWeapon1StarExtendedMag Auto Const Mandatory
+ObjectMod Property LegendaryWeapon1StarInstigating Auto Const Mandatory
+ObjectMod Property LegendaryWeapon1StarOxygenated Auto Const Mandatory
+ObjectMod Property LegendaryWeapon1StarFurious Auto Const Mandatory
+ObjectMod[] Property LegendaryWeapon2Star Auto Const Mandatory
+ObjectMod Property LegendaryWeapon2StarHandloading Auto Const Mandatory
+ObjectMod Property LegendaryWeapon2StarHitman Auto Const Mandatory
+ObjectMod Property LegendaryWeapon2StarLacerate Auto Const Mandatory
+ObjectMod Property LegendaryWeapon2StarCorrosive Auto Const Mandatory
+ObjectMod Property LegendaryWeapon2StarIncendiary Auto Const Mandatory
+ObjectMod Property LegendaryWeapon2StarPoison Auto Const Mandatory
+ObjectMod Property LegendaryWeapon2StarRadioactive Auto Const Mandatory
+ObjectMod[] Property LegendaryWeapon3Star Auto Const Mandatory
+ObjectMod Property LegendaryWeapon3StarConcussive Auto Const Mandatory
+ObjectMod Property LegendaryWeapon3StarDespondent Auto Const Mandatory
+ObjectMod Property LegendaryWeapon3StarFrenzy Auto Const Mandatory
+ObjectMod Property LegendaryWeapon3StarElemental Auto Const Mandatory
+ObjectMod Property LegendaryWeapon3StarExplosive Auto Const Mandatory
+ObjectMod Property LegendaryWeapon3StarOneInchPunch Auto Const Mandatory
+ObjectMod Property LegendaryWeapon3StarSkipShot Auto Const Mandatory
+ObjectMod Property LegendaryWeapon3StarTesla Auto Const Mandatory
 
 Function FillArray(ObjectMod[] akArrayA, ObjectMod[] akArrayB)
     Int i = 0
@@ -218,164 +334,3 @@ Function RerollMods(ObjectReference akItem, ObjectMod[] akMods1Star, ObjectMod[]
         akItem.AttachMod(akMods3Star[Utility.RandomInt(0, akMods3Star.Length - 1)], 0)
     Endif
 EndFunction
-
-Function DoReroll()
-    If(Mode > 0)
-        If(!AstraRerollContainerRef)
-            AstraRerollContainerRef = Game.GetPlayer().PlaceAtMe(AE_TAHQ_Stache_Vendor_WorkContainer)
-        EndIf
-        RegisterForMenuOpenCloseEvent("ContainerMenu")
-        AstraRerollContainerRef.OpenOneWayTransferMenu(true, AE_EquipmentList)
-    EndIf
-EndFunction
-
-Function DoExchange()
-    If(!AstraRerollContainerRef)
-        AstraRerollContainerRef = Game.GetPlayer().PlaceAtMe(AE_TAHQ_Stache_Vendor_WorkContainer)
-    EndIf
-    Mode = 4
-    RegisterForMenuOpenCloseEvent("ContainerMenu")
-    AstraRerollContainerRef.OpenOneWayTransferMenu(true, AE_LegendaryList) ;TODO legendary items list
-EndFunction
-
-;When called, checks to make sure the player has the required number of Astras, then gives the appropriate level of of item.
-Function AstraExchange(Int aiAstras)
-    LockGuard AstraExchangeDataGuard
-        Actor myPlayer = Game.GetPlayer()
-        If myPlayer.GetItemCount(Astra) >= aiAstras
-            If aiAstras == SFBGS003_Astras_SmallAmount.GetValue()
-                Mode = 1
-            ElseIf aiAstras == SFBGS003_Astras_MedAmount.GetValue()
-                Mode = 2
-            ElseIf aiAstras == SFBGS003_Astras_LargeAmount.GetValue()
-                Mode = 3
-            EndIf
-        Else
-            Mode = 0
-            SFBGS003_AstrasErrorMSG.Show()
-        EndIf
-    EndLockGuard
-EndFunction
-
-Container Property AE_TAHQ_Stache_Vendor_WorkContainer Auto Const Mandatory
-ObjectReference Property AstraRerollContainerRef Auto
-Int Property Result Auto Conditional
-Int Property Mode Auto
-
-ObjectMod[] Property LegendaryWeapon1Star Auto Const Mandatory
-
-ObjectMod[] Property LegendaryWeapon2Star Auto Const Mandatory
-
-ObjectMod[] Property LegendaryWeapon3Star Auto Const Mandatory
-
-ObjectMod[] Property LegendaryHelmet1Star Auto Const Mandatory
-
-ObjectMod[] Property LegendaryHelmet2Star Auto Const Mandatory
-
-ObjectMod[] Property LegendaryHelmet3Star Auto Const Mandatory
-
-ObjectMod[] Property LegendarySuit1Star Auto Const Mandatory
-
-ObjectMod[] Property LegendarySuit2Star Auto Const Mandatory
-
-ObjectMod[] Property LegendarySuit3Star Auto Const Mandatory
-
-ObjectMod[] Property LegendaryBackpack1Star Auto Const Mandatory
-
-ObjectMod[] Property LegendaryBackpack2Star Auto Const Mandatory
-
-ObjectMod[] Property LegendaryBackpack3Star Auto Const Mandatory
-
-ObjectMod Property LegendaryWeapon1StarBashing Auto Const Mandatory
-
-ObjectMod Property LegendaryWeapon1StarExtendedMag Auto Const Mandatory
-
-ObjectMod Property LegendaryWeapon1StarOxygenated Auto Const Mandatory
-
-ObjectMod Property LegendaryWeapon1StarInstigating Auto Const Mandatory
-
-ObjectMod Property LegendaryWeapon1StarFurious Auto Const Mandatory
-
-ObjectMod Property LegendaryWeapon2StarHitman Auto Const Mandatory
-
-ObjectMod Property LegendaryWeapon2StarLacerate Auto Const Mandatory
-
-ObjectMod Property LegendaryWeapon2StarCorrosive Auto Const Mandatory
-
-ObjectMod Property LegendaryWeapon2StarIncendiary Auto Const Mandatory
-
-ObjectMod Property LegendaryWeapon2StarRadioactive Auto Const Mandatory
-
-ObjectMod Property LegendaryWeapon2StarPoison Auto Const Mandatory
-
-ObjectMod Property LegendaryWeapon2StarHandloading Auto Const Mandatory
-
-ObjectMod Property LegendaryWeapon3StarSkipShot Auto Const Mandatory
-
-ObjectMod Property LegendaryWeapon3StarTesla Auto Const Mandatory
-
-ObjectMod Property LegendaryWeapon3StarConcussive Auto Const Mandatory
-
-ObjectMod Property LegendaryWeapon3StarFrenzy Auto Const Mandatory
-
-ObjectMod Property LegendaryWeapon3StarExplosive Auto Const Mandatory
-
-ObjectMod Property LegendaryWeapon3StarOneInchPunch Auto Const Mandatory
-
-ObjectMod Property LegendaryWeapon3StarElemental Auto Const Mandatory
-
-Keyword Property WeaponTypeRanged Auto Const Mandatory
-
-Keyword Property WeaponTypeMelee Auto Const Mandatory
-
-Keyword Property HasScope Auto Const Mandatory
-
-Keyword Property HasScopeRecon Auto Const Mandatory
-
-Keyword Property ma_Cutter Auto Const Mandatory
-
-Keyword Property ma_Bridger Auto Const Mandatory
-
-Keyword Property WeaponTypeShotgun Auto Const Mandatory
-
-Keyword Property ma_RocketLauncher Auto Const Mandatory
-
-Keyword Property ma_ArcWelder Auto Const Mandatory
-
-Keyword Property ma_Novablast Auto Const Mandatory
-
-Keyword Property WeaponTypeLaser Auto Const Mandatory
-
-Keyword Property WeaponTypeParticleBeam Auto Const Mandatory
-
-Keyword Property ma_Microgun Auto Const Mandatory
-
-Keyword Property ma_MagStorm Auto Const Mandatory
-
-Keyword Property ma_MagShear Auto Const Mandatory
-
-Keyword Property WeaponTypeToolGrip Auto Const Mandatory
-
-Keyword Property WeaponTypeExplosive Auto Const Mandatory
-
-Keyword Property ma_MagShot Auto Const Mandatory
-
-Keyword Property ma_MagPulse Auto Const Mandatory
-
-Keyword Property ArmorTypeSpacesuitBackpack Auto Const Mandatory
-
-Keyword Property ArmorTypeSpacesuitHelmet Auto Const Mandatory
-
-FormList Property WeaponsMeleeList Auto Const Mandatory
-
-ObjectMod Property LegendaryWeapon3StarDespondent Auto Const Mandatory
-
-FormList Property AE_EquipmentList Auto Const Mandatory
-
-FormList Property AE_LegendaryList Auto Const Mandatory
-FormList Property AE_Legendary1StarList Auto Const Mandatory
-
-
-FormList Property AE_Legendary2StarList Auto Const Mandatory
-
-FormList Property AE_Legendary3StarList Auto Const Mandatory
