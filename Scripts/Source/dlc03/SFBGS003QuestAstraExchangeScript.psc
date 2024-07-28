@@ -106,19 +106,17 @@ Int Function GetItemCountKeywords(FormList akKeywordList)
 EndFunction
 
 Function CleanDumpedItems(FormList akType, Int aiCountToKeep)
-    If aiCountToKeep > 0
-        Int i = 0
-        Int j = 0
-        While i < Inventory.Length && (Inventory[i])
-            If(j < aiCountToKeep && Inventory[i].HasKeywordInFormList(akType))
-                WorkContainer.AddItem(Inventory[i])
-                j += 1
-            Else
-                Inventory[i].Delete()
-            EndIf
-            i += 1
-        EndWhile
-    EndIf
+    Int i = 0
+    Int j = 0
+    While i < Inventory.Length && (Inventory[i])
+        If(j < aiCountToKeep && Inventory[i].HasKeywordInFormList(akType))
+            WorkContainer.AddItem(Inventory[i])
+            j += 1
+        Else
+            Inventory[i].Delete()
+        EndIf
+        i += 1
+    EndWhile
 EndFunction
 
 Int Function DumpItems()  ;Also handles 3stars
@@ -273,13 +271,16 @@ Function GetLegendaryModsForWeapon(ObjectReference akItem, ObjectMod[] Legendary
             Legendary1Star[i] = LegendaryWeapon1StarExtendedMag
             i += 1
         EndIf
-    ElseIf akItem.HasKeyword(HasScope) || akItem.HasKeyword(HasScopeRecon)
+    EndIf
+    If akItem.HasKeyword(HasScope) || akItem.HasKeyword(HasScopeRecon)
             Legendary1Star[i] = LegendaryWeapon1StarOxygenated
             i += 1
-    ElseIf !akItem.HasKeyword(WeaponTypeShotgun)
+    EndIf
+    If !akItem.HasKeyword(WeaponTypeShotgun)
         Legendary1Star[i] = LegendaryWeapon1StarInstigating
         i += 1
-    ElseIf !akItem.HasKeyword(ma_RocketLauncher) &&  !akItem.HasKeyword(ma_Cutter) && !akItem.HasKeyword(ma_Bridger) &&  !akItem.HasKeyword(ma_ArcWelder)
+    EndIf
+    If !akItem.HasKeyword(ma_RocketLauncher) &&  !akItem.HasKeyword(ma_Cutter) && !akItem.HasKeyword(ma_Bridger) &&  !akItem.HasKeyword(ma_ArcWelder)
         Legendary1Star[i] = LegendaryWeapon1StarFurious
         i += 1
     EndIf
@@ -290,7 +291,8 @@ Function GetLegendaryModsForWeapon(ObjectReference akItem, ObjectMod[] Legendary
     If akItem.HasKeyword(WeaponTypeRanged)
         Legendary2Star[i] = LegendaryWeapon2StarHitman
         i += 1
-    ElseIf !akItem.HasKeyword(ma_Novablast)
+    EndIf
+    If !akItem.HasKeyword(ma_Novablast)
         Legendary2Star[i] = LegendaryWeapon2StarLacerate
         i += 1
         Legendary2Star[i] = LegendaryWeapon2StarCorrosive
@@ -301,7 +303,8 @@ Function GetLegendaryModsForWeapon(ObjectReference akItem, ObjectMod[] Legendary
         i += 1
         Legendary2Star[i] = LegendaryWeapon2StarPoison
         i += 1
-    ElseIf !akItem.HasKeyword(WeaponTypeMelee) && !akItem.HasKeyword(WeaponTypeLaser) && !akItem.HasKeyword(WeaponTypeParticleBeam)
+    EndIf
+    If !akItem.HasKeyword(WeaponTypeMelee) && !akItem.HasKeyword(WeaponTypeLaser) && !akItem.HasKeyword(WeaponTypeParticleBeam)
         Legendary2Star[i] = LegendaryWeapon2StarHandloading
         i += 1
     EndIf
@@ -316,20 +319,24 @@ Function GetLegendaryModsForWeapon(ObjectReference akItem, ObjectMod[] Legendary
             Legendary3Star[i] = LegendaryWeapon3StarTesla
             i += 1
         EndIf
-    ElseIf !akItem.HasKeyword(ma_Novablast)
+    EndIf
+    If !akItem.HasKeyword(ma_Novablast)
         Legendary3Star[i] = LegendaryWeapon3StarDespondent
         i += 1
         Legendary3Star[i] = LegendaryWeapon3StarFrenzy
         i += 1
         Legendary3Star[i] = LegendaryWeapon3StarElemental
         i += 1
-    ElseIf !akItem.HasKeyword(ma_Microgun) && !akItem.HasKeyword(ma_MagStorm) && !akItem.HasKeyword(ma_MagShear)
+    EndIf
+    If !akItem.HasKeyword(ma_Microgun) && !akItem.HasKeyword(ma_MagStorm) && !akItem.HasKeyword(ma_MagShear)
         Legendary3Star[i] = LegendaryWeapon3StarConcussive
         i += 1
-    ElseIf !akItem.HasKeyword(WeaponTypeMelee) && !akItem.HasKeyword(ma_RocketLauncher) && !akItem.HasKeyword(ma_Novablast) && !akItem.HasKeyword(ma_Bridger) && !akItem.HasKeyword(WeaponTypeToolGrip)  
+    EndIf
+    If !akItem.HasKeyword(WeaponTypeMelee) && !akItem.HasKeyword(ma_RocketLauncher) && !akItem.HasKeyword(ma_Novablast) && !akItem.HasKeyword(ma_Bridger) && !akItem.HasKeyword(WeaponTypeToolGrip)  
         Legendary3Star[i] = LegendaryWeapon3StarExplosive
         i += 1
-    ElseIf !akItem.HasKeyword(WeaponTypeMelee) && !akItem.HasKeyword(WeaponTypeExplosive) && !akItem.HasKeyword(ma_Microgun) && !akItem.HasKeyword(ma_MagStorm) && !akItem.HasKeyword(ma_MagShear) && !akItem.HasKeyword(ma_MagShot) && !akItem.HasKeyword(ma_MagPulse) && !akItem.HasKeyword(WeaponTypeShotgun) && !akItem.HasKeyword(WeaponTypeToolGrip)  
+    EndIf 
+    If !akItem.HasKeyword(WeaponTypeMelee) && !akItem.HasKeyword(WeaponTypeExplosive) && !akItem.HasKeyword(ma_Microgun) && !akItem.HasKeyword(ma_MagStorm) && !akItem.HasKeyword(ma_MagShear) && !akItem.HasKeyword(ma_MagShot) && !akItem.HasKeyword(ma_MagPulse) && !akItem.HasKeyword(WeaponTypeShotgun) && !akItem.HasKeyword(WeaponTypeToolGrip)  
         Legendary3Star[i] = LegendaryWeapon3StarOneInchPunch
         i += 1
     EndIf
