@@ -25,6 +25,12 @@ FormList Property AE_Legendary1StarList Auto Const Mandatory
 FormList Property AE_Legendary2StarList Auto Const Mandatory
 FormList Property AE_Legendary3StarList Auto Const Mandatory
 
+Message Property AE_Tutorial_Reroll Auto Const Mandatory
+Bool RerollTutorialShown = False
+
+Message Property AE_Tutorial_Recycle Auto Const Mandatory
+Bool RecycleTutorialShown = False
+
 Int Mode
 Int Property Result Auto Conditional
 
@@ -71,6 +77,10 @@ FormList Property AE_LegendaryList Auto Const Mandatory
 ObjectReference[] Inventory
 
 Function StartCycling()
+    If(!RecycleTutorialShown)
+        RecycleTutorialShown = true
+        AE_Tutorial_Recycle.Show()
+    EndIf
     If(!WorkContainer)
         WorkContainer = Game.GetPlayer().PlaceAtMe(AE_TAHQ_Stache_Vendor_WorkContainer, 1, true)
     EndIf
@@ -226,6 +236,10 @@ Int FilteredLegendaryWeapon3StarLength
 
 ;When called, checks to make sure the player has the required number of Astras, and update mode that will dialog output and be used by further entry points
 Function AstraExchange(Int aiAstras)
+    If(!RerollTutorialShown)
+        RerollTutorialShown = true
+        AE_Tutorial_Reroll.Show()
+    EndIf
     LockGuard AstraExchangeDataGuard
         Actor myPlayer = Game.GetPlayer()
         If myPlayer.GetItemCount(Astra) >= aiAstras
