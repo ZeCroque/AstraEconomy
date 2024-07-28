@@ -29,16 +29,7 @@ Event OnMenuOpenCloseEvent(string asMenuName, bool abOpening)
         Actor myPlayer = Game.GetPlayer()
         UnregisterForMenuOpenCloseEvent("ContainerMenu")
         If Mode == 4
-            Game.FadeOutGame(true, true, 0, 1.0, true)
-            Int AstraTotal = 0
-            Int AstraCount = RecycleItems()
-            While(AstraCount > 0)
-                AstraTotal += AstraCount
-                AstraCount = RecycleItems()
-            EndWhile
-            myPlayer.AddItem(Astra, AstraTotal)
-            WorkContainer.RemoveAllItems(myPlayer)
-            Game.FadeOutGame(false, true, 0, 1.0, false)
+            Result = WorkContainer.GetItemCount()
         Else
             Int ItemCount = WorkContainer.GetItemCount() 
             If(ItemCount == 0)
@@ -65,46 +56,8 @@ Event OnMenuOpenCloseEvent(string asMenuName, bool abOpening)
             EndIf
             WorkContainer.RemoveAllItems(Game.GetPlayer())
         Endif
-    EndIf
+    Endif
 EndEvent
-
-Function DoReroll()
-    If(Mode > 0)
-        If(!WorkContainer)
-            WorkContainer = Game.GetPlayer().PlaceAtMe(AE_TAHQ_Stache_Vendor_WorkContainer, 1, true)
-        EndIf
-        RegisterForMenuOpenCloseEvent("ContainerMenu")
-        WorkContainer.OpenOneWayTransferMenu(true, AE_EquipmentList)
-    EndIf
-EndFunction
-
-Function DoExchange()
-    If(!WorkContainer)
-        WorkContainer = Game.GetPlayer().PlaceAtMe(AE_TAHQ_Stache_Vendor_WorkContainer, 1, true)
-    EndIf
-    Mode = 4
-    RegisterForMenuOpenCloseEvent("ContainerMenu")
-    WorkContainer.OpenOneWayTransferMenu(true, AE_LegendaryList)
-EndFunction
-
-;When called, checks to make sure the player has the required number of Astras, and update mode that will dialog output and be used by further entry points
-Function AstraExchange(Int aiAstras)
-    LockGuard AstraExchangeDataGuard
-        Actor myPlayer = Game.GetPlayer()
-        If myPlayer.GetItemCount(Astra) >= aiAstras
-            If aiAstras == SFBGS003_Astras_SmallAmount.GetValue()
-                Mode = 1
-            ElseIf aiAstras == SFBGS003_Astras_MedAmount.GetValue()
-                Mode = 2
-            ElseIf aiAstras == SFBGS003_Astras_LargeAmount.GetValue()
-                Mode = 3
-            EndIf
-        Else
-            Mode = 0
-            SFBGS003_AstrasErrorMSG.Show()
-        EndIf
-    EndLockGuard
-EndFunction
 
 ;### Cycling
 
@@ -115,6 +68,29 @@ FormList Property AE_Legendary2StarList Auto Const Mandatory
 FormList Property AE_Legendary3StarList Auto Const Mandatory
 
 ObjectReference[] Inventory
+
+Function StartCycling()
+    If(!WorkContainer)
+        WorkContainer = Game.GetPlayer().PlaceAtMe(AE_TAHQ_Stache_Vendor_WorkContainer, 1, true)
+    EndIf
+    Mode = 4
+    RegisterForMenuOpenCloseEvent("ContainerMenu")
+    WorkContainer.OpenOneWayTransferMenu(true, AE_LegendaryList)
+EndFunction
+
+Function DoCycling()
+    Actor myPlayer = Game.GetPlayer()
+    Game.FadeOutGame(true, true, 0, 1.0, true)
+    Int AstraTotal = 0
+    Int AstraCount = RecycleItems()
+    While(AstraCount > 0)
+        AstraTotal += AstraCount
+        AstraCount = RecycleItems()
+    EndWhile
+    myPlayer.AddItem(Astra, AstraTotal)
+    WorkContainer.RemoveAllItems(myPlayer)
+    Game.FadeOutGame(false, true, 0, 1.0, false)
+EndFunction
 
 ;Method with the same name in ObjectReference does not work, so remade it
 Int Function GetItemCountKeywords(FormList akKeywordList)
@@ -244,6 +220,35 @@ ObjectMod Property LegendaryWeapon3StarExplosive Auto Const Mandatory
 ObjectMod Property LegendaryWeapon3StarOneInchPunch Auto Const Mandatory
 ObjectMod Property LegendaryWeapon3StarSkipShot Auto Const Mandatory
 ObjectMod Property LegendaryWeapon3StarTesla Auto Const Mandatory
+
+;When called, checks to make sure the player has the required number of Astras, and update mode that will dialog output and be used by further entry points
+Function AstraExchange(Int aiAstras)
+    LockGuard AstraExchangeDataGuard
+        Actor myPlayer = Game.GetPlayer()
+        If myPlayer.GetItemCount(Astra) >= aiAstras
+            If aiAstras == SFBGS003_Astras_SmallAmount.GetValue()
+                Mode = 1
+            ElseIf aiAstras == SFBGS003_Astras_MedAmount.GetValue()
+                Mode = 2
+            ElseIf aiAstras == SFBGS003_Astras_LargeAmount.GetValue()
+                Mode = 3
+            EndIf
+        Else
+            Mode = 0
+            SFBGS003_AstrasErrorMSG.Show()
+        EndIf
+    EndLockGuard
+EndFunction
+
+Function DoReroll()
+    If(Mode > 0)
+        If(!WorkContainer)
+            WorkContainer = Game.GetPlayer().PlaceAtMe(AE_TAHQ_Stache_Vendor_WorkContainer, 1, true)
+        EndIf
+        RegisterForMenuOpenCloseEvent("ContainerMenu")
+        WorkContainer.OpenOneWayTransferMenu(true, AE_EquipmentList)
+    EndIf
+EndFunction
 
 Function FillArray(ObjectMod[] akArrayA, ObjectMod[] akArrayB)
     Int i = 0
