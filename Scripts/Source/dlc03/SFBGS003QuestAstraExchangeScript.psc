@@ -21,6 +21,10 @@ FormList Property WeaponsMeleeList Auto Const Mandatory
 Keyword Property ArmorTypeSpacesuitBackpack Auto Const Mandatory
 Keyword Property ArmorTypeSpacesuitHelmet Auto Const Mandatory
 
+FormList Property AE_Legendary1StarList Auto Const Mandatory
+FormList Property AE_Legendary2StarList Auto Const Mandatory
+FormList Property AE_Legendary3StarList Auto Const Mandatory
+
 Int Mode
 Int Property Result Auto Conditional
 
@@ -63,9 +67,6 @@ EndEvent
 
 FormList Property AE_EquipmentList Auto Const Mandatory
 FormList Property AE_LegendaryList Auto Const Mandatory
-FormList Property AE_Legendary1StarList Auto Const Mandatory
-FormList Property AE_Legendary2StarList Auto Const Mandatory
-FormList Property AE_Legendary3StarList Auto Const Mandatory
 
 ObjectReference[] Inventory
 
@@ -348,12 +349,18 @@ Function RerollMods(ObjectReference akItem, ObjectMod[] akMods1Star, Int aiMods1
         akItem.AttachMod(akMods1Star[Utility.RandomInt(0, aiMods1StarLength - 1)], 0)
         Game.GetPlayer().RemoveItem(Astra, SFBGS003_Astras_SmallAmount.GetValueInt())
     ElseIf Mode == 2
-        akItem.AttachMod(akMods1Star[Utility.RandomInt(0, aiMods1StarLength - 1)], 0)
+        If(!akItem.HasKeywordInFormList(AE_Legendary1StarList))
+            akItem.AttachMod(akMods1Star[Utility.RandomInt(0, aiMods1StarLength - 1)], 0)
+        EndIf
         akItem.AttachMod(akMods2Star[Utility.RandomInt(0, aiMods2StarLength - 1)], 0)
         Game.GetPlayer().RemoveItem(Astra, SFBGS003_Astras_MedAmount.GetValueInt())
     Else
-        akItem.AttachMod(akMods1Star[Utility.RandomInt(0, aiMods1StarLength - 1)], 0)
-        akItem.AttachMod(akMods2Star[Utility.RandomInt(0, aiMods2StarLength - 1)], 0)
+        If(!akItem.HasKeywordInFormList(AE_Legendary1StarList))
+            akItem.AttachMod(akMods1Star[Utility.RandomInt(0, aiMods1StarLength - 1)], 0)
+        EndIf
+        If(!akItem.HasKeywordInFormList(AE_Legendary2StarList))
+            akItem.AttachMod(akMods2Star[Utility.RandomInt(0, aiMods2StarLength - 1)], 0)
+        EndIf
         akItem.AttachMod(akMods3Star[Utility.RandomInt(0, aiMods3StarLength - 1)], 0)
         Game.GetPlayer().RemoveItem(Astra, SFBGS003_Astras_LargeAmount.GetValueInt())
     Endif
