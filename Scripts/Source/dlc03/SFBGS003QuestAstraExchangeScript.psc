@@ -339,12 +339,15 @@ EndFunction
 Function RerollMods(ObjectReference akItem, ObjectMod[] akMods1Star, Int aiMods1StarLength, ObjectMod[] akMods2Star, Int aiMods2StarLength, ObjectMod[] akMods3Star, Int aiMods3StarLength)
     If Mode == 1
         akItem.AttachMod(akMods1Star[Utility.RandomInt(0, aiMods1StarLength - 1)], 0)
+        Game.GetPlayer().RemoveItem(Astra, SFBGS003_Astras_SmallAmount.GetValueInt())
     ElseIf Mode == 2
         akItem.AttachMod(akMods1Star[Utility.RandomInt(0, aiMods1StarLength - 1)], 0)
         akItem.AttachMod(akMods2Star[Utility.RandomInt(0, aiMods2StarLength - 1)], 0)
+        Game.GetPlayer().RemoveItem(Astra, SFBGS003_Astras_MedAmount.GetValueInt())
     Else
         akItem.AttachMod(akMods1Star[Utility.RandomInt(0, aiMods1StarLength - 1)], 0)
         akItem.AttachMod(akMods2Star[Utility.RandomInt(0, aiMods2StarLength - 1)], 0)
         akItem.AttachMod(akMods3Star[Utility.RandomInt(0, aiMods3StarLength - 1)], 0)
+        Game.GetPlayer().RemoveItem(Astra, SFBGS003_Astras_LargeAmount.GetValueInt())
     Endif
 EndFunction
