@@ -1,17 +1,11 @@
-Scriptname DLC03:SFBGS003QuestAstraExchangeScript extends Quest Conditional
+Scriptname AE:AEQuestAstraExchangeScript extends Quest Conditional
+
+;### Main
 
 GlobalVariable Property SFBGS003_Astras_SmallAmount Mandatory Const Auto
 GlobalVariable Property SFBGS003_Astras_MedAmount Mandatory Const Auto
 GlobalVariable Property SFBGS003_Astras_LargeAmount Mandatory Const Auto
-Message Property SFBGS003_AstrasErrorMSG Mandatory Const Auto
 MiscObject Property Astra Mandatory Const Auto
-LeveledItem Property SFBGS003_LL_Astras_1Star Mandatory Const Auto
-LeveledItem Property SFBGS003_LL_Astras_2Star Mandatory Const Auto
-LeveledItem Property SFBGS003_LL_Astras_3Star Mandatory Const Auto
-
-Guard AstraExchangeDataGuard ProtectsFunctionLogic
-
-;### Main
 
 Container Property AE_TAHQ_Stache_Vendor_WorkContainer Auto Const Mandatory
 ObjectReference WorkContainer
@@ -234,13 +228,11 @@ Int FilteredLegendaryWeapon1StarLength
 Int FilteredLegendaryWeapon2StarLength
 Int FilteredLegendaryWeapon3StarLength
 
-;When called, checks to make sure the player has the required number of Astras, and update mode that will dialog output and be used by further entry points
-Function AstraExchange(Int aiAstras)
+Function AstraReroll(Int aiAstras)
     If(!RerollTutorialShown)
         RerollTutorialShown = true
         AE_Tutorial_Reroll.Show()
     EndIf
-    LockGuard AstraExchangeDataGuard
         Actor myPlayer = Game.GetPlayer()
         If myPlayer.GetItemCount(Astra) >= aiAstras
             If aiAstras == SFBGS003_Astras_SmallAmount.GetValue()
@@ -252,9 +244,7 @@ Function AstraExchange(Int aiAstras)
             EndIf
         Else
             Mode = 0
-            SFBGS003_AstrasErrorMSG.Show()
         EndIf
-    EndLockGuard
 EndFunction
 
 Function DoReroll()

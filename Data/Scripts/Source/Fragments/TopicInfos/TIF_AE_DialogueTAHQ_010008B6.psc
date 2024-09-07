@@ -1,11 +1,11 @@
 ;BEGIN FRAGMENT CODE - Do not edit anything between this and the end comment
-Scriptname Fragments:TopicInfos:TIF_SFBGS003_DialogueTAHQ_0100080A Extends TopicInfo Hidden Const
+Scriptname Fragments:TopicInfos:TIF_AE_DialogueTAHQ_010008B6 Extends TopicInfo Hidden Const
 
 ;BEGIN FRAGMENT Fragment_End
 Function Fragment_End(ObjectReference akSpeakerRef)
 Actor akSpeaker = akSpeakerRef as Actor
-;BEGIN AUTOCAST TYPE dlc03:sfbgs003questastraexchangescript
-dlc03:sfbgs003questastraexchangescript kmyQuest = GetOwningQuest() as dlc03:sfbgs003questastraexchangescript
+;BEGIN AUTOCAST TYPE AE:AEQuestAstraExchangeScript
+AE:AEQuestAstraExchangeScript kmyQuest = GetOwningQuest() as AE:AEQuestAstraExchangeScript
 ;END AUTOCAST
 ;BEGIN CODE
 kmyQuest.DoReroll()
