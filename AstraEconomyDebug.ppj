@@ -1,13 +1,13 @@
 <?xml version='1.0'?>
  <PapyrusProject xmlns="PapyrusProject.xsd"
    Flags="H:\Games\steamapps\common\Starfield\Data\Scripts\Source\Starfield_Papyrus_Flags.flg"
-   Output="D:\dev\Mods\Starfield\AstraEconomy\Scripts"
+   Output="D:\dev\Mods\Starfield\AstraEconomy\Data\Scripts"
  >
    <Imports>
      <Import>H:\Games\steamapps\common\Starfield\Data\Scripts\Source</Import>
-     <Import>D:\dev\Mods\Starfield\AstraEconomy\Scripts\Source</Import>
+     <Import>D:\dev\Mods\Starfield\AstraEconomy\Data\Scripts\Source</Import>
    </Imports>
    <Folders>
-     <Folder>.\Scripts\Source</Folder>
+     <Folder>.\Data\Scripts\Source</Folder>
    </Folders>
  </PapyrusProject>
