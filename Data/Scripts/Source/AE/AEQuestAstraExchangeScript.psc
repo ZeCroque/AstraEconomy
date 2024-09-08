@@ -14,6 +14,7 @@ Keyword Property WeaponTypeRanged Auto Const Mandatory
 FormList Property WeaponsMeleeList Auto Const Mandatory
 Keyword Property ArmorTypeSpacesuitBackpack Auto Const Mandatory
 Keyword Property ArmorTypeSpacesuitHelmet Auto Const Mandatory
+Keyword Property ArmorTypeSpacesuitBody Auto Const Mandatory
 
 FormList Property AE_Legendary1StarList Auto Const Mandatory
 FormList Property AE_Legendary2StarList Auto Const Mandatory
@@ -27,6 +28,10 @@ Bool RecycleTutorialShown = False
 
 Int Mode
 Int Property Result Auto Conditional
+
+Bool Function IsMelee(ObjectReference akObjectReference)
+    return akObjectReference.HasKeyword(WeaponTypeMelee) || akObjectReference.HasKeyword(WeaponTypeMelee2H) || WeaponsMeleeList.HasForm(akObjectReference.GetBaseObject())
+EndFunction
 
 Event OnMenuOpenCloseEvent(string asMenuName, bool abOpening)
     if(!abOpening)
@@ -43,7 +48,7 @@ Event OnMenuOpenCloseEvent(string asMenuName, bool abOpening)
             Else
                 Result = 2
                 ObjectReference DroppedItem = WorkContainer.DropFirstObject()
-                If DroppedItem.HasKeyword(WeaponTypeRanged) || WeaponsMeleeList.HasForm(DroppedItem.GetBaseObject())
+                If DroppedItem.HasKeyword(WeaponTypeRanged) || IsMelee(DroppedItem)
                     ObjectMod[] FilteredLegendaryWeapon1Star = new ObjectMod[11]
                     ObjectMod[] FilteredLegendaryWeapon2Star = new ObjectMod[11]
                     ObjectMod[] FilteredLegendaryWeapon3Star = new ObjectMod[10]
@@ -53,8 +58,10 @@ Event OnMenuOpenCloseEvent(string asMenuName, bool abOpening)
                     RerollMods(DroppedItem, LegendaryBackpack1Star, LegendaryBackpack1Star.Length, LegendaryBackpack2Star, LegendaryBackpack2Star.Length, LegendaryBackpack3Star, LegendaryBackpack3Star.Length)
                 ElseIf(DroppedItem.HasKeyword(ArmorTypeSpacesuitHelmet))
                     RerollMods(DroppedItem, LegendaryHelmet1Star, LegendaryHelmet1Star.Length, LegendaryHelmet2Star, LegendaryHelmet2Star.Length, LegendaryHelmet3Star, LegendaryHelmet3Star.Length)
-                Else
+                ElseIf(DroppedItem.HasKeyword(ArmorTypeSpacesuitBody))
                     RerollMods(DroppedItem, LegendarySuit1Star, LegendarySuit1Star.Length, LegendarySuit2Star, LegendarySuit2Star.Length, LegendarySuit3Star, LegendarySuit3Star.Length)
+                Else
+                    Debug.MessageBox("Item not supported.")
                 EndIf
                 myPlayer.AddItem(DroppedItem)
             EndIf
@@ -187,6 +194,7 @@ Keyword Property WeaponTypeShotgun Auto Const Mandatory
 Keyword Property WeaponTypeExplosive Auto Const Mandatory
 Keyword Property WeaponTypeToolGrip Auto Const Mandatory
 Keyword Property WeaponTypeMelee Auto Const Mandatory
+Keyword Property WeaponTypeMelee2H Auto Const Mandatory
 Keyword Property HasScope Auto Const Mandatory
 Keyword Property HasScopeRecon Auto Const Mandatory
 Keyword Property ma_ArcWelder Auto Const Mandatory
@@ -309,7 +317,7 @@ Function GetLegendaryModsForWeapon(ObjectReference akItem, ObjectMod[] Legendary
         Legendary2Star[i] = LegendaryWeapon2StarPoison
         i += 1
     EndIf
-    If !akItem.HasKeyword(WeaponTypeMelee) && !akItem.HasKeyword(WeaponTypeLaser) && !akItem.HasKeyword(WeaponTypeParticleBeam)
+    If !IsMelee(akItem) && !akItem.HasKeyword(WeaponTypeLaser) && !akItem.HasKeyword(WeaponTypeParticleBeam)
         Legendary2Star[i] = LegendaryWeapon2StarHandloading
         i += 1
     EndIf
@@ -337,11 +345,11 @@ Function GetLegendaryModsForWeapon(ObjectReference akItem, ObjectMod[] Legendary
         Legendary3Star[i] = LegendaryWeapon3StarConcussive
         i += 1
     EndIf
-    If !akItem.HasKeyword(WeaponTypeMelee) && !akItem.HasKeyword(ma_RocketLauncher) && !akItem.HasKeyword(ma_Novablast) && !akItem.HasKeyword(ma_Bridger) && !akItem.HasKeyword(WeaponTypeToolGrip)  
+    If !IsMelee(akItem) && !akItem.HasKeyword(ma_RocketLauncher) && !akItem.HasKeyword(ma_Novablast) && !akItem.HasKeyword(ma_Bridger) && !akItem.HasKeyword(WeaponTypeToolGrip)  
         Legendary3Star[i] = LegendaryWeapon3StarExplosive
         i += 1
     EndIf 
-    If !akItem.HasKeyword(WeaponTypeMelee) && !akItem.HasKeyword(WeaponTypeExplosive) && !akItem.HasKeyword(ma_Microgun) && !akItem.HasKeyword(ma_MagStorm) && !akItem.HasKeyword(ma_MagShear) && !akItem.HasKeyword(ma_MagShot) && !akItem.HasKeyword(ma_MagPulse) && !akItem.HasKeyword(WeaponTypeShotgun) && !akItem.HasKeyword(WeaponTypeToolGrip)  
+    If !IsMelee(akItem) && !akItem.HasKeyword(WeaponTypeExplosive) && !akItem.HasKeyword(ma_Microgun) && !akItem.HasKeyword(ma_MagStorm) && !akItem.HasKeyword(ma_MagShear) && !akItem.HasKeyword(ma_MagShot) && !akItem.HasKeyword(ma_MagPulse) && !akItem.HasKeyword(WeaponTypeShotgun) && !akItem.HasKeyword(WeaponTypeToolGrip)  
         Legendary3Star[i] = LegendaryWeapon3StarOneInchPunch
         i += 1
     EndIf
