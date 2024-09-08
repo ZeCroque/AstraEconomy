@@ -17,7 +17,7 @@
 
 ### 1. RESUME
 
-Ce mod change les dialogues de Stache de l'Alliance des Traqueurs afin qu'il vous donne des équipements légendaires plus spécialisés au lieu d'un item complètement aléatoire, réduisant donc le grind pour avoir l'équipement légendaire qu'il vous faut.
+Ce mod ajoute de nouveaux dialogues à Stache de l'Alliance des Traqueurs qui vous permettront de "reroll" votre équipement légendaire et d'échanger les légendaires que vous ne voulez plus contre des Astras, réduisant donc le grind pour avoir l'équipement légendaire qu'il vous faut.
 Il fait assez basiquement deux choses :
 - Stache vous demande maintenant de vous donner un item via un menu d'inventaire, et va "reroll" l'effet légendaire de niveau demandé (et uniquement celui-ci, excepté si les niveaux inférieurs n'étaient pas présent).
 - Vous pouvez maintenant échanger des équipements légendaire à Stache contre des Astras en fonction du "niveau d'étoile" de ce que vous avez donné. 3 étoiles, qu'importe la combinaison d'item <=> 1 Astra. Si le "niveau d'étoile" des items que vous avez donné n'est pas un multiple de 3, vous récupérerez le surplus. 
@@ -25,10 +25,6 @@ Il fait assez basiquement deux choses :
 C'est un mode assez simple, mais je trouve qu'il est bien plus pratique que ce BGS nous a fourni tout en étant pas aussi OP que les autres mods de recyclage et/ou de craft d'items légendaires disponibles qui cassaient la boucle de gameplay je trouve.
 
 Notez que vous ne pouvez pas obtenir de combinaison d'effets légendaire impossible dans le jeu de base, donc pas combinaison Garde-Paix ou de Soudeur explosif, désolé pour les tricheurs :p J'ajouterais peut-être des options de personnalisation plus tard par contre, en fonction du succès du mod et de ce que veux la communauté, donc n'ayez pas peur de demander dans la section commentaire :)
-
-Je sais que la formulation des nouveaux dialogues est un peu maladroite, mais j'ai fait de mon mieux pour écrire quelque chose qui fasse le plus de sens possible parmis les dialogues vanilla que j'ai laissé inchangés. J'ajouterais peut-être des voix générées par IA à un moment donné.
-
-C'est toujours une version assez précoce du mod, même si je l'ai testé pendant un moment sur ma sauvegarde et que tout c'est bien passé jusqu'ici.
 
 PS : Vous remarquerez peut-être, avant le fondu au noir quand vous recyclez des items, que lesdits items sont jetés au sol avant d'être traités par le mod (vous les entendez aussi). Malheureusement c'est la seule manière que j'ai trouvée pour que cela fonctionne parce que la fonction que voulais utiliser *GetItemCountKeywords*, ne marche pas correctement. Si des moddeurs ont une meilleur solution, je suis tout ouïe !
 
@@ -48,11 +44,14 @@ Le mod est marqué comme un "Light file", donc il ne gaspillera pas une précieu
 **Manuelle**
 - Extrayez les fichiers requis (cf. `2. CONTENU DU MOD`) depuis l'archive vers votre dossier Data et activez-les dans in-game dans le menu "Creations"
 
+**Note:**
+Si vous commencez le jeu dans le QG de l'alliance des traqueurs, vous devrez sortir et rentrer à nouveau pour obtenir les nouveaux dialogues.
+
 ### 4. PROBLEMES CONNUS
 Aucun. Faites moi savoir si vous en trouvez.
 
 ### 5. INCOMPATIBILITES
-Pas que je sache. Mais quoi que ce soit qui modifierait le script vanilla "DLC03:SFBGS003QuestAstraExchangeScript" entrera en conflit avec le mod.
+Aucune.
 
 ### 6. REMERCIEMENTS
 - Merci à Bethesda Softworks pour cet excellent jeu que nous aimons tous
@@ -63,6 +62,7 @@ Pas que je sache. Mais quoi que ce soit qui modifierait le script vanilla "DLC03
 ### 7. OUTILS UTILISES
 - Creation Kit
 - SF1Edit
+- Starfield Plugin Bridge
 - Visual Studio Code
 - Gimp
 
@@ -77,5 +77,4 @@ Le mod est open-source, vous pouvez trouver les sources ici: https://github.com/
 **Améliorations possibles:**
 - Voix générées par IA pour les nouveaux dialogues
 - Des paramètres pour les effets légendaire retirés du jeu, unique ou impossible à avoir sur un type d'arme donné
-- Un paramètre pour désactive le reroll d'effet légendaires
 - Vous me dites !
