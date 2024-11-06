@@ -28,6 +28,7 @@ Bool RecycleTutorialShown = False
 
 Int Mode
 Int Property Result Auto Conditional
+Bool Property IsCassiopeiaInstalled Auto Conditional
 
 Bool Function IsMelee(ObjectReference akObjectReference)
     return akObjectReference.HasKeyword(WeaponTypeMelee) || akObjectReference.HasKeyword(WeaponTypeMelee2H) || WeaponsMeleeList.HasForm(akObjectReference.GetBaseObject())
@@ -48,20 +49,29 @@ Event OnMenuOpenCloseEvent(string asMenuName, bool abOpening)
             Else
                 Result = 2
                 ObjectReference DroppedItem = WorkContainer.DropFirstObject()
-                If DroppedItem.HasKeyword(WeaponTypeRanged) || IsMelee(DroppedItem)
-                    ObjectMod[] FilteredLegendaryWeapon1Star = new ObjectMod[11]
-                    ObjectMod[] FilteredLegendaryWeapon2Star = new ObjectMod[11]
-                    ObjectMod[] FilteredLegendaryWeapon3Star = new ObjectMod[10]
-                    GetLegendaryModsForWeapon(DroppedItem, FilteredLegendaryWeapon1Star, FilteredLegendaryWeapon2Star, FilteredLegendaryWeapon3Star)
-                    RerollMods(DroppedItem, FilteredLegendaryWeapon1Star, FilteredLegendaryWeapon1StarLength, FilteredLegendaryWeapon2Star, FilteredLegendaryWeapon2StarLength, FilteredLegendaryWeapon3Star, FilteredLegendaryWeapon3StarLength)
-                ElseIf(DroppedItem.HasKeyword(ArmorTypeSpacesuitBackpack))
-                    RerollMods(DroppedItem, LegendaryBackpack1Star, LegendaryBackpack1Star.Length, LegendaryBackpack2Star, LegendaryBackpack2Star.Length, LegendaryBackpack3Star, LegendaryBackpack3Star.Length)
-                ElseIf(DroppedItem.HasKeyword(ArmorTypeSpacesuitHelmet))
-                    RerollMods(DroppedItem, LegendaryHelmet1Star, LegendaryHelmet1Star.Length, LegendaryHelmet2Star, LegendaryHelmet2Star.Length, LegendaryHelmet3Star, LegendaryHelmet3Star.Length)
-                ElseIf(DroppedItem.HasKeyword(ArmorTypeSpacesuitBody))
-                    RerollMods(DroppedItem, LegendarySuit1Star, LegendarySuit1Star.Length, LegendarySuit2Star, LegendarySuit2Star.Length, LegendarySuit3Star, LegendarySuit3Star.Length)
+                If(Mode < 4)
+                    If DroppedItem.HasKeyword(WeaponTypeRanged) || IsMelee(DroppedItem)
+                        ObjectMod[] FilteredLegendaryWeapon1Star = new ObjectMod[11]
+                        ObjectMod[] FilteredLegendaryWeapon2Star = new ObjectMod[11]
+                        ObjectMod[] FilteredLegendaryWeapon3Star = new ObjectMod[10]
+                        GetLegendaryModsForWeapon(DroppedItem, FilteredLegendaryWeapon1Star, FilteredLegendaryWeapon2Star, FilteredLegendaryWeapon3Star)
+                        RerollMods(DroppedItem, FilteredLegendaryWeapon1Star, FilteredLegendaryWeapon1StarLength, FilteredLegendaryWeapon2Star, FilteredLegendaryWeapon2StarLength, FilteredLegendaryWeapon3Star, FilteredLegendaryWeapon3StarLength)
+                    ElseIf(DroppedItem.HasKeyword(ArmorTypeSpacesuitBackpack))
+                        RerollMods(DroppedItem, LegendaryBackpack1Star, LegendaryBackpack1Star.Length, LegendaryBackpack2Star, LegendaryBackpack2Star.Length, LegendaryBackpack3Star, LegendaryBackpack3Star.Length)
+                    ElseIf(DroppedItem.HasKeyword(ArmorTypeSpacesuitHelmet))
+                        RerollMods(DroppedItem, LegendaryHelmet1Star, LegendaryHelmet1Star.Length, LegendaryHelmet2Star, LegendaryHelmet2Star.Length, LegendaryHelmet3Star, LegendaryHelmet3Star.Length)
+                    ElseIf(DroppedItem.HasKeyword(ArmorTypeSpacesuitBody))
+                        RerollMods(DroppedItem, LegendarySuit1Star, LegendarySuit1Star.Length, LegendarySuit2Star, LegendarySuit2Star.Length, LegendarySuit3Star, LegendarySuit3Star.Length)
+                    Else
+                        Debug.MessageBox("Item not supported.")
+                    EndIf
                 Else
-                    Debug.MessageBox("Item not supported.")
+                    ObjectMod[] mods = CassiopeiaPapyrusExtender.GetReferenceMods(DroppedItem)
+                    Int i = 0
+                    While(i < mods.Length)
+                        Debug.Trace(CassiopeiaPapyrusExtender.GetTESFullName(mods[i] as Form))
+                        i += 1
+                    EndWhile
                 EndIf
                 myPlayer.AddItem(DroppedItem)
             EndIf
@@ -376,4 +386,23 @@ Function RerollMods(ObjectReference akItem, ObjectMod[] akMods1Star, Int aiMods1
         akItem.AttachMod(akMods3Star[Utility.RandomInt(0, aiMods3StarLength - 1)], 0)
         Game.GetPlayer().RemoveItem(Astra, SFBGS003_Astras_LargeAmount.GetValueInt())
     Endif
+EndFunction
+
+; Upgrading
+
+Function StartUpgrading()
+    ; If(!RecycleTutorialShown)
+    ;     RecycleTutorialShown = true
+    ;     AE_Tutorial_Recycle.Show()
+    ; EndIf
+    If(!WorkContainer)
+        WorkContainer = Game.GetPlayer().PlaceAtMe(AE_TAHQ_Stache_Vendor_WorkContainer, 1, true)
+    EndIf
+    Mode = 5
+    RegisterForMenuOpenCloseEvent("ContainerMenu")
+    WorkContainer.OpenOneWayTransferMenu(true, AE_LegendaryList)
+EndFunction
+
+Function DoUpgrading()
+    ;TODO
 EndFunction
