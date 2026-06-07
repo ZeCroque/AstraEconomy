@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SSTXMLRessources>
+  <Params>
+    <Addon>AstraEconomy.esp</Addon>
+    <Source>en</Source>
+    <Dest>fr</Dest>
+    <Version>2</Version>
+  </Params>
+  <Content>
+    <String List="0" Partial="2">
+      <EDID>[00000000]</EDID>
+      <REC>TES4:CNAM</REC>
+      <Source>DEFAULT</Source>
+      <Dest>DEFAULT</Dest>
+    </String>
+    <String List="0">
+      <EDID>AE_TAHQ_Stache_Vendor_WorkContainer</EDID>
+      <REC>CONT:FULL</REC>
+      <Source>Stache</Source>
+      <Dest>Stache</Dest>
+    </String>
+    <String List="0" Partial="2">
+      <EDID>AE_DialogueTAHQ</EDID>
+      <REC>QUST:FULL</REC>
+      <Source>[ Astra Economy Trackers Alliance HQ Dialogue ]</Source>
+      <Dest>[ Astra Economy Trackers Alliance HQ Dialogue ]</Dest>
+    </String>
+    <String List="1">
+      <EDID>AE_Tutorial_Recycle</EDID>
+      <REC>MESG:DESC</REC>
+      <Source>Add the items you want to exchange for Astras in the inventory dialog that will follow. Beware you cannot take out the item you store in Stache inventory so be sure to avoid missclicks.
+
+The Astra amount you will get depends on the amount of Stars of all the Legendary items you traded combined. You will get an Astra each 3 Stars. If there would be remaining Stars after the exchange, you will be given back some items you traded.</Source>
+      <Dest>Ajoutez les objets que vous voulez améliorer dans le menu d&apos;inventaire qui va s&apos;afficher suite à ce message. Faites attention car vous ne pourrez pas enlever les objets de l&apos;inventaire de Stache donc assurez-vous de ne pas cliquer à côté.
+
+La quantité d&apos;Astra que vous obtiendrez dépend du total d&apos;étoiles de tous les objets légendaire que vous avez échangé combinés. Vous aurez un Astra par tranche de 3 étoiles. S&apos;il devait y avoir des étoiles restantes après l&apos;échange, vous récupérerez certains des objets que vous aviez échangé.</Dest>
+    </String>
+    <String List="1">
+      <EDID>AE_Tutorial_Reroll</EDID>
+      <REC>MESG:DESC</REC>
+      <Source>In order to reroll your gear, you must give exactly one item in the inventory dialog that will follow. If you give any other amount, items will be given back to you and nothing will happen. Beware you cannot take out the item you store in Stache inventory so be sure to avoid missclicks (you can still add another item to cancel if required).
+
+If you reroll an item that lacks lesser legendary effects than the one you requested, they will be added too. For instance, rerolling the third star of a single star legendary item will also roll the second star.
+Otherwise, only the legendary effect you asked for will be rerolled.</Source>
+      <Dest>Afin de reroll votre équipement, vous devez donner exactement un objet dans le menu d&apos;inventaire qui va s&apos;afficher suite à ce message. Si vous donnez n&apos;importe quel autre montant, ces objets vous seront rendus et rien ne sera fait. Faites attention car vous ne pourrez pas enlever les objets de l&apos;inventaire de Stache donc assurez-vous de ne pas cliquer à côté (vous pouvez toujours ajouter un autre objet pour annuler au besoin).
+
+Si vous faites un reroll sur un item qui ne possède pas les effets légendaire de niveau inférieur à celui que vous avez demandé, ils seront ajoutés également. Par exemple, faire un reroll de la troisième étoile d&apos;un objet légendaire à une étoile va aussi reroll la seconde étoile.
+Autrement, seul l&apos;effet légendaire du niveau demandé sera reroll.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[01000812]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source> So you changed your mind ? No problem. Lay it on me.</Source>
+      <Dest> Donc tu as changé d&apos;avis ? Pas de problème, je t&apos;écoute.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[01000813]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>You gave me multiple items, I cannot choose for you. Please give me only the one you wish to be upgraded.</Source>
+      <Dest>Tu m&apos;as donné plusieurs équipements, je ne peux pas choisir pour toi. Donnes-moi seulement celui que tu veux améliorer s&apos;il te plaît.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[01000855]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Let&apos;s see what you have for sale.</Source>
+      <Dest>Voyons voir ce que tu as à vendre.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[01000854]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>I&apos;d like to exchange equipment for Astras.</Source>
+      <Dest>J&apos;aimerais échanger des équipements contre des Astras.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[0100089E]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Deal. Let me evaluate your gear for a while.</Source>
+      <Dest>Deal. Laisses-moi juste un peu de temps pour évaluer ton matos.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[010008AA]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>So you changed your mind ? No problem. Lay it on me.</Source>
+      <Dest>Donc tu as changé d&apos;avis ? Pas de problème, je t&apos;écoute.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[010008B6]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Deal. Let&apos;s see what I can do.</Source>
+      <Dest>Deal. Voyons ce que je peux faire.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[0100095E]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Sure thing. Let&apos;s see what kind of gear piques your interest.</Source>
+      <Dest>Pas de problème. Regarde si tu trouves quelque chose qui t&apos;intéresse.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[0100095F]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>You&apos;re in luck. Just so happens I&apos;ve got some equipment with your name on it. For the right price. </Source>
+      <Dest>T&apos;as du bol. Je viens justement de recevoir un peu de matos avec ton nom dessus... pour le bon prix.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[01000960]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Great. Let&apos;s get you outfitted with the latest gear.</Source>
+      <Dest>Génial. On devrait pouvoir te trouver ce qu&apos;il y a de plus récent.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[01000961]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>You&apos;re talking to the right guy, then. Take a look at what I&apos;ve got for you.</Source>
+      <Dest>Tu as frappé à la bonne porte. Regarde donc ce que j&apos;ai pour toi.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[01000962]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>I think you&apos;re gonna like what I&apos;ve got in stock today.</Source>
+      <Dest>Je pense que mon stock d&apos;aujourd&apos;hui va te plaire.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[01000963]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Well then, lets get some brand spanking new gear into your hands.</Source>
+      <Dest>Très bien. Alors, on va te coller du matos flambant neuf entre les mains.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[01000964]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>If you&apos;re looking for some cutting edge equipment, look no further.</Source>
+      <Dest>Tu cherches de l&apos;équipement de pointe, hein ? Ha ! J&apos;ai tout ce qu&apos;il te faut.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[01000966]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>If you&apos;ve got Astras, I&apos;m sure I can scrounge up something to give you.</Source>
+      <Dest>Si tu as des astras, on devrait pouvoir te trouver quelque chose facilement.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[01000967]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>I&apos;ve got all sorts of equipment. Let&apos;s see those Astras.</Source>
+      <Dest>J&apos;ai toute sorte d&apos;équipements. Ha ! Montre-moi tes astras.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[01000968]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Look, I can&apos;t guarantee you&apos;re going to like what I give you, but I can guarantee it&apos;ll work like a charm.</Source>
+      <Dest>Écoute, je ne peux pas te garantir que tu aimeras ce que je vais te donner, mais je peux te garantir... que ça fonctionnera au poil.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[01000969]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Lucky you, I just finished working on some new stuff I think you&apos;ll like.</Source>
+      <Dest>T&apos;as du bol, je viens justement de finir de nouveaux trucs. Je pense que ça devrait te plaire.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[0100096A]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Astras, you say? I can take those off your hands, and put something better in &apos;em.</Source>
+      <Dest>Des astras, hein ? Je peux t&apos;en débarrasser et te donner autre chose de bien mieux en échange.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[0100096B]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Doesn&apos;t look like you&apos;ve got any Astras. Come back when you do.</Source>
+      <Dest>T&apos;as pas l&apos;air d&apos;avoir un seul astra en poche. Reviens quand ce sera le cas.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[010008D1]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>You got it.</Source>
+      <Dest>Ça marche.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[010008E2]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Coming right up.</Source>
+      <Dest>Je t&apos;apporte ça !</Dest>
+    </String>
+    <String List="2">
+      <EDID>[010008F2]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Pleasure doing business with you.</Source>
+      <Dest>Heureux de faire affaire avec toi.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[0100090E]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>I&apos;ve got more where that came from.</Source>
+      <Dest>Et j&apos;en ai encore plein d&apos;autres en stock !</Dest>
+    </String>
+    <String List="2">
+      <EDID>[01000912]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Keep the Astras flowing and I&apos;ll make sure you&apos;re well equipped.</Source>
+      <Dest>Continue d&apos;écouler tes astras chez moi et je m&apos;occupe de ton équipement.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[01000916]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Thanks! Enjoy your new equipment.</Source>
+      <Dest>Merci ! Profite de ton nouvel équipement.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[0100091A]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>I won&apos;t ask where you got these, so long as you don&apos;t ask where I get my parts.</Source>
+      <Dest>Je ne demanderai pas où tu trouves tes astras tant que tu ne me demandes pas où je me fournis.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[0100091E]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Astras for gear. Good deal if I ever heard one.</Source>
+      <Dest>Des astras contre du matos. C&apos;est le meilleur marché que je connaisse.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[01000922]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>And there you go. Enjoy!</Source>
+      <Dest>Et voilà pour toi. Amuse-toi bien.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[0100092B]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Astras for me, equipment for you. Here you go.</Source>
+      <Dest>Des astras pour moi, et de l&apos;équipement pour toi. Ha ha ! Voilà.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[0100096D]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>[Pay &lt;Global=SFBGS003_Astras_SmallAmount&gt; Astra] I&apos;d like you to upgrade my gear with a good piece of equipment.</Source>
+      <Dest>[Payer  &lt;Global=SFBGS003_Astras_SmallAmount&gt; Astras] J&apos;aimerais que tu améliores mon matos avec quelque chose de solide.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[01000970]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>I&apos;m not going to give it to you for free. Come back when you&apos;ve got the Astras.</Source>
+      <Dest>Je ne vais pas te le donner gratuitement, tu sais. Reviens me voir quand t&apos;auras des astras.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[01000971]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>And I&apos;d like to give you one, but you&apos;re out of Astras.</Source>
+      <Dest>Et honnêtement j&apos;aimerais bien te servir, mais tes poches sont vides.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[01000977]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>You don&apos;t exactly have the Astras for that, do you? Come back when you&apos;ve got &apos;em.</Source>
+      <Dest>Attends un peu. Tu n&apos;as pas du tout assez d&apos;astras, là. Mais reviens me voir quand ce sera le cas, et je serai ravi de répondre à toutes tes demandes.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[01000978]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Well, for that, you&apos;d need more Astras, wouldn&apos;t you? Come back when you&apos;ve got &apos;em.</Source>
+      <Dest>Eh bien, il va te falloir un peu plus d&apos;astras que ça. Tu crois pas ? Reviens me voir quand tu les auras.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[01000974]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>[Pay &lt;Global=SFBGS003_Astras_MedAmount&gt; Astras] I&apos;d like you to upgrade my gear with something a little better.</Source>
+      <Dest>[Payer  &lt;Global=SFBGS003_Astras_MedAmount&gt; Astras] J&apos;aimerais que tu améliores mon matos avec quelque chose d&apos;un peu mieux.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[0100097B]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>[Pay &lt;Global=SFBGS003_Astras_LargeAmount&gt; Astras] I&apos;d like you to upgrade my gear with one of the best equipment you&apos;ve got.</Source>
+      <Dest>[Payer  &lt;Global=SFBGS003_Astras_LargeAmount&gt; Astras] J&apos;aimerais que tu améliores mon matos avec ce que tu as de mieux.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[0100098F]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>I&apos;d like you to upgrade my gear.</Source>
+      <Dest>J&apos;aimerais que tu améliores mon matos.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[01000982]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>No problem. Lay it on me.</Source>
+      <Dest>Pas de problème, je t&apos;écoute.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[01000980]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Actually, I&apos;ve got something else I wanted to ask you about.</Source>
+      <Dest>En fait, j&apos;avais une autre question à te poser.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[0100097D]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Hold on now. You don&apos;t have that many Astras. But when you do, I&apos;ll be glad to oblige with your equipment request.</Source>
+      <Dest>Attends un peu. Tu n&apos;as pas du tout assez d&apos;astras, là. Mais reviens me voir quand ce sera le cas, et je serai ravi de répondre à toutes tes demandes.</Dest>
+    </String>
+  </Content>
+</SSTXMLRessources>
