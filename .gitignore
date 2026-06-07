@@ -1,7 +1,19 @@
 *.ignore.*
 *.pex
+*.wem
+*.esm
+*.ba2
+*.dat
+*.ilstrings
+*.dlstrings
+*.strings
+__pycache__
 SF1Edit Backups
 SF1Edit Cache
+build
+output
 meta.ini
 Backup
 Release
+ModInfo.psc
+info.xml
