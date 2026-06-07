@@ -1,18 +1,15 @@
 ;BEGIN FRAGMENT CODE - Do not edit anything between this and the end comment
-Scriptname Fragments:TopicInfos:TIF_AE_DialogueTAHQ_0100096D Extends TopicInfo Hidden Const
+Scriptname AE:Fragments:Scenes:SF_AE_DialogueTAHQ_Stache_TL_BuyXTech Extends Scene Hidden Const
 
-;BEGIN FRAGMENT Fragment_End
-Function Fragment_End(ObjectReference akSpeakerRef)
-Actor akSpeaker = akSpeakerRef as Actor
+;BEGIN FRAGMENT Fragment_Phase_04_Begin
+Function Fragment_Phase_04_Begin()
 ;BEGIN AUTOCAST TYPE AE:AEQuestAstraExchangeScript
 AE:AEQuestAstraExchangeScript kmyQuest = GetOwningQuest() as AE:AEQuestAstraExchangeScript
 ;END AUTOCAST
 ;BEGIN CODE
-kmyQuest.SetWantedXTechAmount(1)
+kmyQuest.BuyXTech()
 ;END CODE
 EndFunction
 ;END FRAGMENT
 
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
-
-GlobalVariable Property SFBGS003_Astras_SmallAmount Auto Const Mandatory

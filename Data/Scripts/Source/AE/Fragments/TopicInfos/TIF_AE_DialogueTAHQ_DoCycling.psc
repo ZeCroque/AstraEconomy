@@ -1,5 +1,5 @@
 ;BEGIN FRAGMENT CODE - Do not edit anything between this and the end comment
-Scriptname Fragments:TopicInfos:TIF_AE_DialogueTAHQ_01000855 Extends TopicInfo Hidden Const
+Scriptname AE:Fragments:TopicInfos:TIF_AE_DialogueTAHQ_DoCycling Extends TopicInfo Hidden Const
 
 ;BEGIN FRAGMENT Fragment_End
 Function Fragment_End(ObjectReference akSpeakerRef)
@@ -8,7 +8,7 @@ Actor akSpeaker = akSpeakerRef as Actor
 AE:AEQuestAstraExchangeScript kmyQuest = GetOwningQuest() as AE:AEQuestAstraExchangeScript
 ;END AUTOCAST
 ;BEGIN CODE
-kmyQuest.StartCycling()
+kmyQuest.DoCycling()
 ;END CODE
 EndFunction
 ;END FRAGMENT
