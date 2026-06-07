@@ -8,7 +8,7 @@ Actor akSpeaker = akSpeakerRef as Actor
 AE:AEQuestAstraExchangeScript kmyQuest = GetOwningQuest() as AE:AEQuestAstraExchangeScript
 ;END AUTOCAST
 ;BEGIN CODE
-kmyQuest.AstraReroll(SFBGS003_Astras_SmallAmount.GetValueInt())
+kmyQuest.SetWantedXTechAmount(1)
 ;END CODE
 EndFunction
 ;END FRAGMENT
