@@ -1,5 +1,9 @@
 [
     "Data\\Scripts\\AE\\AEQuestAstraExchangeScript.pex",
+    "Data\\Scripts\\AE\\GameplayOptionManagerQuest.pex",
+    "Data\\Scripts\\AE\\Utility\\ModInfo.pex",
+    "Data\\Scripts\\AE\\UpdateQuest\\UpdateQuestScript.pex",
+    "Data\\Scripts\\AE\\UpdateQuest\\PlayerAliasScript.pex",
     "Data\\Scripts\\AE\\Fragments\\TopicInfos\\TIF_AE_DialogueTAHQ_AllAstras.pex",
     "Data\\Scripts\\AE\\Fragments\\TopicInfos\\TIF_AE_DialogueTAHQ_AstrasBigAmount.pex",
     "Data\\Scripts\\AE\\Fragments\\TopicInfos\\TIF_AE_DialogueTAHQ_AstrasSmallAmount.pex",

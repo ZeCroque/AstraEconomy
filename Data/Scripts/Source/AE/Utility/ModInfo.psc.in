@@ -1,0 +1,9 @@
+Scriptname AE:Utility:ModInfo
+
+Float Function GetModVersion() Global
+    Return @MOD_VERSION@
+EndFunction
+
+Bool Function IsAchievementFriendly() Global
+    Return @IS_AF@
+EndFunction

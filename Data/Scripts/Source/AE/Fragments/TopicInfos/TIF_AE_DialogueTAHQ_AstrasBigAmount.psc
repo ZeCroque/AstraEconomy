@@ -8,7 +8,7 @@ Actor akSpeaker = akSpeakerRef as Actor
 AE:AEQuestAstraExchangeScript kmyQuest = GetOwningQuest() as AE:AEQuestAstraExchangeScript
 ;END AUTOCAST
 ;BEGIN CODE
-kmyQuest.SetWantedXTechAmount(3)
+kmyQuest.SetWantedXTechAmount(AE_Xtech_Big_Amount.GetValueInt())
 ;END CODE
 EndFunction
 ;END FRAGMENT
@@ -16,3 +16,5 @@ EndFunction
 ;END FRAGMENT CODE - Do not edit anything between this and the begin comment
 
 GlobalVariable Property SFBGS003_Astras_MedAmount Auto Const Mandatory
+
+GlobalVariable Property AE_XTech_Big_Amount Auto Const Mandatory
