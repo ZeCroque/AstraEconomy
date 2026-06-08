@@ -127,6 +127,10 @@ EndFunction
 
 ;### X-Tech
 
+MiscObject Property XTech Mandatory Const Auto
+
+Int Property XTechCost Auto Hidden
+
 Int XTechAmount = -1
 
 Function SetWantedXTechAmount(Int aiAmount)
@@ -134,6 +138,13 @@ Function SetWantedXTechAmount(Int aiAmount)
 EndFunction
 
 Function BuyXTech()
-    ;TODO
-    Debug.Trace("AE_XtechAmount" + XTechAmount)
+    XTechCost = 3
+    If(XTechAmount < 0)    
+        Int astraCount = Game.GetPlayer().GetItemCount(Astra)
+        Game.GetPlayer().AddItem(XTech, astraCount / XTechCost)
+        Game.GetPlayer().RemoveItem(Astra, astraCount - astraCount % XTechCost)
+    Else
+        Game.GetPlayer().AddItem(XTech, XTechAmount)
+        Game.GetPlayer().RemoveItem(Astra, XTechAmount * XTechCost)
+    EndIf
 EndFunction
