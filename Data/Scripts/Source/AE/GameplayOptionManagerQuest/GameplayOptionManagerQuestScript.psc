@@ -1,4 +1,4 @@
-Scriptname AE:GameplayOptionManagerQuest extends Quest
+Scriptname AE:GameplayOptionManagerQuest:GameplayOptionManagerQuestScript extends Quest
 
 GameplayOption Property AE_XTechCost Mandatory Const Auto
 GlobalVariable Property AE_Astras_Small_Amount Mandatory Const Auto
@@ -10,14 +10,14 @@ Quest Property AE_DialogueTAHQ Mandatory Const Auto
 Event OnQuestInit()
     RegisterForGameplayOptionChangedEvent()
 
-    AE:AEQuestAstraExchangeScript astraExchangeScript = AE_DialogueTAHQ as AE:AEQuestAstraExchangeScript
+    AE:DialogTAHQQuest:DialogTAHQQuestScript astraExchangeScript = AE_DialogueTAHQ as AE:DialogTAHQQuest:DialogTAHQQuestScript
     astraExchangeScript.XTechCost = 0.5
 EndEvent
 
 Event OnGameplayOptionChanged(GameplayOption[] aChangedOptions)
     Int optionIndex = aChangedOptions.Find(AE_XTechCost)
     If(optionIndex != -1)
-        AE:AEQuestAstraExchangeScript astraExchangeScript = AE_DialogueTAHQ as AE:AEQuestAstraExchangeScript
+        AE:DialogTAHQQuest:DialogTAHQQuestScript astraExchangeScript = AE_DialogueTAHQ as AE:DialogTAHQQuest:DialogTAHQQuestScript
 
         If(aChangedOptions[optionIndex].GetValue() == 0)
             astraExchangeScript.XTechCost = 5

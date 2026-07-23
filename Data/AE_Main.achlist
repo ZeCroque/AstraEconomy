@@ -1,6 +1,6 @@
 [
-    "Data\\Scripts\\AE\\AEQuestAstraExchangeScript.pex",
-    "Data\\Scripts\\AE\\GameplayOptionManagerQuest.pex",
+    "Data\\Scripts\\AE\\DialogTAHQQuest\\DialogTAHQQuestScript.pex",
+    "Data\\Scripts\\AE\\GameplayOptionManagerQuest\\GameplayOptionManagerQuestScript.pex",
     "Data\\Scripts\\AE\\Utility\\ModInfo.pex",
     "Data\\Scripts\\AE\\UpdateQuest\\UpdateQuestScript.pex",
     "Data\\Scripts\\AE\\UpdateQuest\\PlayerAliasScript.pex",

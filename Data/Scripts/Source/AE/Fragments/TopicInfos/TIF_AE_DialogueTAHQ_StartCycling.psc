@@ -4,8 +4,8 @@ Scriptname AE:Fragments:TopicInfos:TIF_AE_DialogueTAHQ_StartCycling Extends Topi
 ;BEGIN FRAGMENT Fragment_End
 Function Fragment_End(ObjectReference akSpeakerRef)
 Actor akSpeaker = akSpeakerRef as Actor
-;BEGIN AUTOCAST TYPE AE:AEQuestAstraExchangeScript
-AE:AEQuestAstraExchangeScript kmyQuest = GetOwningQuest() as AE:AEQuestAstraExchangeScript
+;BEGIN AUTOCAST TYPE AE:DialogTAHQQuest:DialogTAHQQuestScript
+AE:DialogTAHQQuest:DialogTAHQQuestScript kmyQuest = GetOwningQuest() as AE:DialogTAHQQuest:DialogTAHQQuestScript
 ;END AUTOCAST
 ;BEGIN CODE
 kmyQuest.StartCycling()

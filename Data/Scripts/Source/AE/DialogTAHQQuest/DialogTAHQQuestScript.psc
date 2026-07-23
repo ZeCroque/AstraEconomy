@@ -1,4 +1,4 @@
-Scriptname AE:AEQuestAstraExchangeScript extends Quest Conditional
+Scriptname AE:DialogTAHQQuest:DialogTAHQQuestScript extends Quest
 
 ;### Main
 
