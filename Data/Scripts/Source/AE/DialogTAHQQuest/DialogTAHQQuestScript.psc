@@ -89,6 +89,7 @@ Int Function DumpItems()  ;Also handles 3stars
             DroppedItem.Delete()
             AstraCount += 1
         Else
+            DroppedItem.Disable()
             AE_CyclingList.AddForm(DroppedItem)
         Endif
     EndWhile
