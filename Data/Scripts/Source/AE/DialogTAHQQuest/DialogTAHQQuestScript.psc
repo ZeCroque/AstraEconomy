@@ -1,4 +1,4 @@
-Scriptname AE:DialogTAHQQuest:DialogTAHQQuestScript extends Quest
+Scriptname AE:DialogTAHQQuest:DialogTAHQQuestScript extends Quest Conditional
 
 ;### Main
 
@@ -7,15 +7,15 @@ MiscObject Property Astra Mandatory Const Auto
 ;### Cycling
 
 Container Property AE_TAHQ_Stache_Vendor_WorkContainer Auto Const Mandatory
-ObjectReference WorkContainer
-
 FormList Property AE_Legendary1StarList Auto Const Mandatory
 FormList Property AE_Legendary2StarList Auto Const Mandatory
 FormList Property AE_Legendary3StarList Auto Const Mandatory
 FormList Property AE_LegendaryList Auto Const Mandatory
-
+FormList Property AE_CyclingList Mandatory Const Auto
 Message Property AE_Tutorial_Recycle Auto Const Mandatory
-Bool RecycleTutorialShown = False
+
+Bool Property RecycleTutorialShown Auto Hidden
+ObjectReference Property WorkContainer Auto Hidden
 
 Int Property Result Auto Conditional
 
@@ -26,8 +26,6 @@ Event OnMenuOpenCloseEvent(string asMenuName, bool abOpening)
         Result = WorkContainer.GetItemCount()
     Endif
 EndEvent
-
-ObjectReference[] Inventory
 
 Function StartCycling()
     If(!RecycleTutorialShown)
@@ -44,14 +42,13 @@ EndFunction
 Function DoCycling()
     Actor myPlayer = Game.GetPlayer()
     Game.FadeOutGame(true, true, 0, 1.0, true)
-    Int AstraTotal = 0
+
     Int AstraCount = RecycleItems()
-    While(AstraCount > 0)
-        AstraTotal += AstraCount
-        AstraCount = RecycleItems()
-    EndWhile
-    myPlayer.AddItem(Astra, AstraTotal)
-    WorkContainer.RemoveAllItems(myPlayer)
+    myPlayer.AddItem(Astra, AstraCount)
+
+    WorkContainer.RemoveAllItems(myPlayer) ;Add back leftovers
+    AE_CyclingList.Revert()
+
     Game.FadeOutGame(false, true, 0, 1.0, false)
 EndFunction
 
@@ -59,8 +56,8 @@ EndFunction
 Int Function GetItemCountKeywords(FormList akKeywordList)
     Int i = 0
     Int Count = 0
-    While i < Inventory.Length && Inventory[i]
-        If(Inventory[i].HasKeywordInFormList(akKeywordList))
+    While i < AE_CyclingList.GetSize() && AE_CyclingList.GetAt(i)
+        If(AE_CyclingList.GetAt(i).HasKeywordInFormList(akKeywordList))
             Count += 1
         Endif
         i += 1
@@ -71,30 +68,28 @@ EndFunction
 Function CleanDumpedItems(FormList akType, Int aiCountToKeep)
     Int i = 0
     Int j = 0
-    While i < Inventory.Length && (Inventory[i])
-        If(j < aiCountToKeep && Inventory[i].HasKeywordInFormList(akType))
-            WorkContainer.AddItem(Inventory[i])
-            j += 1
-        Else
-            Inventory[i].Delete()
+    While(i < AE_CyclingList.GetSize())
+        If(AE_CyclingList.GetAt(i) && AE_CyclingList.GetAt(i).HasKeywordInFormList(akType))
+            If(j < aiCountToKeep)
+                WorkContainer.AddItem(AE_CyclingList.GetAt(i) as ObjectReference)
+                j += 1
+            Else
+                (AE_CyclingList.GetAt(i) as ObjectReference).Delete()
+            EndIf        
         EndIf
         i += 1
     EndWhile
 EndFunction
 
 Int Function DumpItems()  ;Also handles 3stars
-    Inventory = new ObjectReference[Math.Min(128.0, WorkContainer.GetItemCount() as Float) as Int]
-
     Int AstraCount = 0
-    Int i = 0
     While WorkContainer.GetItemCount() > 0 
         ObjectReference DroppedItem = WorkContainer.DropFirstObject()
         If(DroppedItem.HasKeywordInFormList(AE_Legendary3StarList))
             DroppedItem.Delete()
             AstraCount += 1
         Else
-            Inventory[i] = DroppedItem
-            i += 1
+            AE_CyclingList.AddForm(DroppedItem)
         Endif
     EndWhile
     Return AstraCount
@@ -118,9 +113,9 @@ Int Function RecycleItems()
     AstraCount += OneStarTwoStarCombinationsCount
     OneStarCount -= OneStarTwoStarCombinationsCount
     TwoStarCount -= OneStarTwoStarCombinationsCount
-
-    CleanDumpedItems(AE_Legendary1StarList, OneStarCount)
+    
     CleanDumpedItems(AE_Legendary2StarList, TwoStarCount)
+    CleanDumpedItems(AE_Legendary1StarList, OneStarCount)
 
     Return AstraCount
 EndFunction
