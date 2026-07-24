@@ -150,7 +150,7 @@ def CreateNexusArchive(mainFileList, modifiedVoiceList, vanillaVoiceList, vanill
     # NO AI Voices
     if len(vanillaVoiceList) > 0:
         InitFileList(fileListName, vanillaVoiceList, buildFolder)
-        CreateBA2(fileListName, archiveNameBase + "Voices_en_NO_AI" + archiveExtension, artifactsSubpath + "Data\\")
+        CreateBA2(fileListName, archiveNameBase + ("Voices_en_NO_AI" if len(modifiedVoiceList) > 0 else "Voices_en") + archiveExtension, artifactsSubpath + "Data\\")
         os.remove(buildFolder + fileListName)
 
     # Localized voices

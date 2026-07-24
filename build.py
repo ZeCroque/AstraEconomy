@@ -4,7 +4,7 @@ import glob
 import re
 
 modVersionString = "1.0.0"
-modVersionFloat = "1."
+modVersionFloat = "1.0"
 
 def GetTemplatedVarValue(name, mode):
     if name == "MOD_VERSION":
