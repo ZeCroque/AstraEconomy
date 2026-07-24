@@ -42,7 +42,7 @@ EndFunction
 
 Function DoCycling()
     Actor myPlayer = Game.GetPlayer()
-    Game.FadeOutGame(true, true, 0, 1.0, true)
+    Game.FadeOutGame(true, true, 0, 0.1, true)
 
     Int AstraCount = RecycleItems()
     myPlayer.AddItem(Astra, AstraCount)
