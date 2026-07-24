@@ -10,6 +10,7 @@ Container Property AE_TAHQ_Stache_Vendor_WorkContainer Auto Const Mandatory
 FormList Property AE_Legendary1StarList Auto Const Mandatory
 FormList Property AE_Legendary2StarList Auto Const Mandatory
 FormList Property AE_Legendary3StarList Auto Const Mandatory
+FormList Property AE_Legendary4StarList Mandatory Const Auto
 FormList Property AE_LegendaryList Auto Const Mandatory
 FormList Property AE_CyclingList Mandatory Const Auto
 Message Property AE_Tutorial_Recycle Auto Const Mandatory
@@ -85,7 +86,7 @@ Int Function DumpItems()  ;Also handles 3stars
     Int AstraCount = 0
     While WorkContainer.GetItemCount() > 0 
         ObjectReference DroppedItem = WorkContainer.DropFirstObject()
-        If(DroppedItem.HasKeywordInFormList(AE_Legendary3StarList))
+        If(!DroppedItem.HasKeywordInFormList(AE_Legendary4StarList) && DroppedItem.HasKeywordInFormList(AE_Legendary3StarList))
             DroppedItem.Delete()
             AstraCount += 1
         Else
@@ -99,8 +100,9 @@ EndFunction
 Int Function RecycleItems()
     Int AstraCount = DumpItems() 
 
-    Int TwoStarCount = GetItemCountKeywords(AE_Legendary2StarList)
-    Int OneStarCount = GetItemCountKeywords(AE_Legendary1StarList) - TwoStarCount
+    Int FourStarCount = GetItemCountKeywords(AE_Legendary4StarList)
+    Int TwoStarCount = GetItemCountKeywords(AE_Legendary2StarList) - FourStarCount
+    Int OneStarCount = GetItemCountKeywords(AE_Legendary1StarList) - FourStarCount - TwoStarCount
 
     Int OneStarTripletsCount = OneStarCount / 3
     AstraCount += OneStarTripletsCount
@@ -110,11 +112,26 @@ Int Function RecycleItems()
     AstraCount += TwoStarTripletsCount * 2
     TwoStarCount -= (TwoStarTripletsCount * 3)
 
+    Int FourStarTripletsCount = FourStarCount / 3
+    AstraCount += FourStarTripletsCount * 4
+    FourStarCount -= (FourStarTripletsCount * 3)
+
+    Int TwoStarFourStarCombinationsCount = Math.Min(TwoStarCount as Float, FourStarCount as Float) as Int
+    AstraCount += TwoStarFourStarCombinationsCount * 2
+    TwoStarCount -= TwoStarFourStarCombinationsCount
+    FourStarCount -= TwoStarFourStarCombinationsCount
+
+    Int OneStarFourStarCombinationsCount = Math.Min((OneStarCount / 2) as Float, FourStarCount as Float) as Int
+    AstraCount += OneStarFourStarCombinationsCount * 2
+    OneStarCount -= OneStarFourStarCombinationsCount * 2
+    FourStarCount -= OneStarFourStarCombinationsCount
+
     Int OneStarTwoStarCombinationsCount = Math.Min(OneStarCount as Float, TwoStarCount as Float) as Int
     AstraCount += OneStarTwoStarCombinationsCount
     OneStarCount -= OneStarTwoStarCombinationsCount
     TwoStarCount -= OneStarTwoStarCombinationsCount
     
+    CleanDumpedItems(AE_Legendary4StarList, FourStarCount)
     CleanDumpedItems(AE_Legendary2StarList, TwoStarCount)
     CleanDumpedItems(AE_Legendary1StarList, OneStarCount)
 
