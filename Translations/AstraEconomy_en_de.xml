@@ -1,0 +1,281 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SSTXMLRessources>
+  <Params>
+    <Addon>AstraEconomy.esm</Addon>
+    <Source>en</Source>
+    <Dest>de</Dest>
+    <Version>2</Version>
+  </Params>
+  <Content>
+    <String List="0" Partial="2">
+      <EDID>[00000000]</EDID>
+      <REC>TES4:CNAM</REC>
+      <Source>ZeCroque</Source>
+      <Dest>ZeCroque</Dest>
+    </String>
+    <String List="0">
+      <EDID>[00000000]</EDID>
+      <REC>TES4:SNAM</REC>
+      <Source>Turns Stache at the Trackers Alliance HQ into a proper vendor, allowing you to sell legendary equipment and buy X-Tech using Astras as the currency.</Source>
+      <Dest>Ändert Stache im Hauptquartier der Trackerallianz in einen echten Händler mit Astras als Handelswährung. Du kannst ihm legendäres Equipment verkaufen und X-Tech kaufen.</Dest>
+    </String>
+    <String List="0">
+      <EDID>AE_TAHQ_Stache_Vendor_WorkContainer</EDID>
+      <REC>CONT:FULL</REC>
+      <Source>Stache</Source>
+      <Dest>Stache</Dest>
+    </String>
+    <String List="0">
+      <EDID>AE_DialogueTAHQ</EDID>
+      <REC>QUST:FULL</REC>
+      <Source>[ Astra Economy Trackers Alliance HQ Dialogue ]</Source>
+      <Dest>[ Astra Economy Trackerallianz HQ Dialog ]</Dest>
+    </String>
+    <String List="0">
+      <EDID>AE_ModVersionOption</EDID>
+      <REC>GPOF:NNAM</REC>
+      <Source>  Mod Version: 1.0.0</Source>
+      <Dest>  Mod Version: 1.0.0</Dest>
+    </String>
+    <String List="0">
+      <EDID>AE_XTechCost</EDID>
+      <REC>GPOF:NNAM</REC>
+      <Source>  X-Tech Cost</Source>
+      <Dest>Kosten: X-Tech</Dest>
+    </String>
+    <String List="0">
+      <EDID>AE_XTechCost</EDID>
+      <REC>GPOF:DNAM</REC>
+      <Source>Defines the exchange rate from Astra to X-Tech.
+
+{0}
+
+{1}
+
+{2}
+
+{3}
+
+{4}</Source>
+      <Dest>Bestimmt das Umtauschverhältnis von Astra zu X-Tech.
+
+{0}
+
+{1}
+
+{2}
+
+{3}
+
+{4}</Dest>
+    </String>
+    <String List="0">
+      <EDID>AE_XTechCost</EDID>
+      <REC id="0" idMax="4">GPOF:VOVS</REC>
+      <Source>{0}: You will get 1 X-Tech for 5 Astras.</Source>
+      <Dest>{0}: Du erhältst 1 X-Tech für 5 Astras.</Dest>
+    </String>
+    <String List="0">
+      <EDID>AE_XTechCost</EDID>
+      <REC id="0" idMax="4">GPOF:RESN</REC>
+      <Source>Very Expensive</Source>
+      <Dest>Sehr teuer</Dest>
+    </String>
+    <String List="0">
+      <EDID>AE_XTechCost</EDID>
+      <REC id="1" idMax="4">GPOF:VOVS</REC>
+      <Source>{0}: You will get 1 X-Tech for 3 Astras.</Source>
+      <Dest>{0}: Du erhältst 1 X-Tech für 3 Astras.</Dest>
+    </String>
+    <String List="0">
+      <EDID>AE_XTechCost</EDID>
+      <REC id="1" idMax="4">GPOF:RESN</REC>
+      <Source>Expensive</Source>
+      <Dest>Teuer</Dest>
+    </String>
+    <String List="0">
+      <EDID>AE_XTechCost</EDID>
+      <REC id="2" idMax="4">GPOF:VOVS</REC>
+      <Source>{0}: You will get 1 X-Tech for 1 Astra.</Source>
+      <Dest>{0}: Du erhältst 1 X-Tech für 1 Astra.</Dest>
+    </String>
+    <String List="0">
+      <EDID>AE_XTechCost</EDID>
+      <REC id="2" idMax="4">GPOF:RESN</REC>
+      <Source>Even</Source>
+      <Dest>Gleichwertig</Dest>
+    </String>
+    <String List="0">
+      <EDID>AE_XTechCost</EDID>
+      <REC id="3" idMax="4">GPOF:VOVS</REC>
+      <Source>{0}: You will get 2 X-Techs for 1 Astra.</Source>
+      <Dest>{0}: Du erhältst 2 X-Techs für 1 Astra.</Dest>
+    </String>
+    <String List="0">
+      <EDID>AE_XTechCost</EDID>
+      <REC id="3" idMax="4">GPOF:RESN</REC>
+      <Source>Cheap</Source>
+      <Dest>Billig</Dest>
+    </String>
+    <String List="0">
+      <EDID>AE_XTechCost</EDID>
+      <REC id="4" idMax="4">GPOF:VOVS</REC>
+      <Source>{0}: You will get 3 X-Techs for 1 Astra</Source>
+      <Dest>{0}: Du erhältst 3 X-Techs für 1 Astra.</Dest>
+    </String>
+    <String List="0">
+      <EDID>AE_XTechCost</EDID>
+      <REC id="4" idMax="4">GPOF:RESN</REC>
+      <Source>Very Cheap</Source>
+      <Dest>Sehr billig</Dest>
+    </String>
+    <String List="0">
+      <EDID>AE_MainOptionGroup</EDID>
+      <REC>GPOG:NNAM</REC>
+      <Source>Astra Economy (AE)</Source>
+      <Dest>Astra Economy (AE)</Dest>
+    </String>
+    <String List="1">
+      <EDID>AE_Tutorial_Recycle</EDID>
+      <REC>MESG:DESC</REC>
+      <Source>Add the items you want to exchange for Astras in the inventory dialog that will follow. Beware, you cannot take out the item you store in Stache inventory, so be sure to avoid missclicks.
+
+The Astra amount you will get depends on the amount of Stars on all the Legendary items you traded combined. You will get an Astra each 3 Stars (by default). If there would be remaining Stars after the exchange, you will be given back some of your items.</Source>
+      <Dest>Füge die Gegenstände, die du gegen Astras eintauschen möchtest, im folgenden Inventar-Dialog hinzu. Beachte: Du kannst den Gegenstand, den du in Staches Inventar speicherst, nicht wieder herausnehmen. Achte daher auf Fehlklicks.
+
+Die Menge an Astras, die du erhältst, hängt davon ab, wie viele Sterne (Stars) auf allen Legendären Gegenständen zusammengezählt werden, die du getauscht hast. Du erhältst pro 3 Sterne eine Astra (standardmäßig). Wenn nach dem Tausch noch Sterne übrig bleiben, bekommst du einen Teil deiner Gegenstände zurück.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[02000980]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Actually, I&apos;ve got something else I wanted to ask you about.</Source>
+      <Dest>Eigentlich wollte ich dich noch etwas anderes fragen.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[0200098F]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>I&apos;d like to exchange Astra for X-Tech.</Source>
+      <Dest>Ich möchte gern Astra gegen X-Tech tauschen.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[0200097D]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Hold on now. You don&apos;t have that many Astras. But when you do, I&apos;ll be glad to oblige with your equipment request.</Source>
+      <Dest>Moment mal. Du hast nicht so viele Astras. Aber wenn du welche hast, helfe ich dir gern mit deiner Anfrage nach der Ausrüstung.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[02000982]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>No problem. Lay it on me.</Source>
+      <Dest>Kein Problem. Leg los.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[0200097B]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>[All-in] Here. Take all I have.</Source>
+      <Dest>[All-in] Hier nimm alles, was ich habe.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[02000977]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>You don&apos;t exactly have the Astras for that, do you? Come back when you&apos;ve got &apos;em.</Source>
+      <Dest>Du hast hierfür nicht die passende Menge Astras, nicht wahr? Komm wieder, wenn du sie hast.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[02000978]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Well, for that, you&apos;d need more Astras, wouldn&apos;t you? Come back when you&apos;ve got &apos;em.</Source>
+      <Dest>Nun, dafür bräuchtest du mehr Astras, oder? Komm wieder wenn du sie hast.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[02000974]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>[Pay &lt;Global=AE_Astras_Big_Amount&gt; Astras] I&apos;d like &lt;Global=AE_XTech_Big_Amount&gt; X-Tech.</Source>
+      <Dest>[Zahle &lt;Global=AE_Astras_Big_Amount&gt; Astras] Ich hätte gern &lt;Global=AE_XTech_Big_Amount&gt; X-Tech.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[02000970]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>I&apos;m not going to give it to you for free. Come back when you&apos;ve got the Astras.</Source>
+      <Dest>Ich werde es dir nicht umsonst überlassen. Komm wieder, wenn du Astras hast.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[02000971]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>And I&apos;d like to give you one, but you&apos;re out of Astras.</Source>
+      <Dest>Und ich würde dir gern etwas geben aber du hast keine Astras.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[0200096D]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>[Pay &lt;Global=AE_Astras_Small_Amount&gt; Astra]  I&apos;d like &lt;Global=AE_XTech_Small_Amount&gt; X-Tech.</Source>
+      <Dest>[Zahle &lt;Global=AE_Astras_Small_Amount&gt; Astra]  Ich hätte gern &lt;Global=AE_XTech_Small_Amount&gt; X-Tech.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[0200096A]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Astras, you say? I can take those off your hands, and put something better in &apos;em.</Source>
+      <Dest>Astras sagst du? Ich kann sie dir abnehmen und etwas besseres in deine Hände legen.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[0200096B]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Doesn&apos;t look like you&apos;ve got any Astras. Come back when you do.</Source>
+      <Dest>Es sieht nicht so aus, als hättest du Astras. Komm wieder, wenn du welche hast.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[020008D1]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>You got it.</Source>
+      <Dest>Alles klar.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[020008E2]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Coming right up.</Source>
+      <Dest>Kommt sofort.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[020008F2]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Pleasure doing business with you.</Source>
+      <Dest>Schön, mit dir Geschäfte zu machen.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[0200091A]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>I won&apos;t ask where you got these, so long as you don&apos;t ask where I get my parts.</Source>
+      <Dest>Ich werde nicht fragen, woher du das hast, solange du nicht fragst, woher ich meine Teile bekomme.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[02000922]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>And there you go. Enjoy!</Source>
+      <Dest>Und da ist es. Viel Spaß!</Dest>
+    </String>
+    <String List="2">
+      <EDID>[0200089E]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Deal. Let me evaluate your gear for a while.</Source>
+      <Dest>Deal. Lass mich eben dein Equipment überprüfen.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[020008AA]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>So you changed your mind ? No problem. Lay it on me.</Source>
+      <Dest>Also hast du deine Meinung geändert? Kein Problem. Leg los.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[02000854]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>I&apos;d like to exchange equipment for Astras.</Source>
+      <Dest>Ich würde gern Equipment gegen Astras tauschen.</Dest>
+    </String>
+    <String List="2">
+      <EDID>[02000855]</EDID>
+      <REC>INFO:NAM1</REC>
+      <Source>Let&apos;s see what you have for sale.</Source>
+      <Dest>Lass sehen, was du im Angebot hast.</Dest>
+    </String>
+  </Content>
+</SSTXMLRessources>

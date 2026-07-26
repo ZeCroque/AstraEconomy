@@ -52,6 +52,7 @@ Le nombre d'X-Tech que vous obtiendrez est redéfinissable dans les options de G
 Le mod est disponible dans les langages suivants:
 - Anglais
 - Français
+- Allemand (grâce à PearlCanopus)
 
 ## 3. PROBLEMES CONNUS
 
@@ -90,6 +91,7 @@ Les effets légendaires ajoutés par des mods ne seront pas reconnus et donc la 
 
 - [Stellar Crafting - Quality Crafting Overhaul](https://www.nexusmods.com/starfield/mods/16665) or [Xeno's No Credits for Upgrades (NCU)](https://www.nexusmods.com/starfield/mods/16526) — Si vous voulez remplacer le coût en crédits par des ressources (J'utilise personnellement Stellar Crafting)
 - [Baka Free Legendary Rolls](https://www.nexusmods.com/starfield/mods/16385) and [Upgrades Cost Only X-Tech](https://www.nexusmods.com/starfield/mods/17771) — Si vous voulez simplement vous débarrasser du coût en crédit
+-  [Legendary Aspirational Weapons - Stache's uniques improvement](https://www.nexusmods.com/starfield/mods/10771) — Pour rendre l'option vanilla de Stache plus viable
 
 ## 9. REMERCIEMENTS
 
@@ -99,6 +101,7 @@ Les effets légendaires ajoutés par des mods ne seront pas reconnus et donc la 
 - Merci à xtcrefugee pour avoir répondu à mes questions sur les mid/small masters sur le Discord "Starfield Modding"
 - Merci aux auteurs des polices de Starfield
 - Merci à JonathanOstrus pour son mod [Legendary Module Recycler](https://www.nexusmods.com/starfield/mods/6074) qui a été une bonne ressoure de script
+- Merci à PearlCanopus pour la traduction allemande
 
 ### 10. OUTILS UTILISES
 
