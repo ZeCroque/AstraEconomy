@@ -14,13 +14,13 @@
 11. Licence/Légalité
 12. Autre
 
-### 1. PRESENTATION
+## 1. PRESENTATION
 
 *Vous voulez réduire le grind pour obtenir l'équipement légendaire de vos rêves ? Vous assez simplement besoin de plus d'Astras ? Vous êtes au bon endroit !*
 
 Ce mod ajoute simplement deux entrées de dialogue à Stache dans le QG de l'Alliance des Traqueurs. Le but est de rendre le loot d'équipement légendaire plus gratifiant et de donner une nouvelle utilité aux Astras grâce au système d'amélioration introduit par la mise à jour "Free Lanes".
 
-À l'origine le mod comprenait son propre système de "reroll" d'équipement légendaire qui était moins cheaté (à mon avis) que ceux dans le mods [Legendary Module Recycler](https://www.nexusmods.com/starfield/mods/6074) mod ou la creation de l'équipe de Kinggath "McClarence Outfitters", car il conservait l'aspect aléatoire. Désormais, il repose sur l'X-Tech and le système vanilla, donc c'est juste une alternative à ces mods, avec une emphase sur les Astras. Il a toutefois l'avantage de vous donner plus d'Astras à dépenser via l'option vanilla de Stache, si c'est ce dont vous aviez besoin.
+À l'origine le mod comprenait son propre système de "reroll" d'équipement légendaire qui était moins cheaté (à mon avis) que ceux dans le mods [Legendary Module Recycler](https://www.nexusmods.com/starfield/mods/6074) mod ou la creation de l'équipe de Kinggath [McClarence Outfitters](https://creations.bethesda.net/en/starfield/details/d4f5c6a2-ea4f-4f74-b338-6403c5717ec0/McClarence_Outfitters__Legendary_Customization), car il conservait l'aspect aléatoire. Désormais, il repose sur l'X-Tech and le système vanilla, donc c'est juste une alternative à ces mods, avec une emphase sur les Astras. Il a toutefois l'avantage de vous donner plus d'Astras à dépenser via l'option vanilla de Stache, si c'est ce dont vous aviez besoin.
 
 ## 2. DETAILS
 
@@ -77,7 +77,7 @@ Le mod est marqué comme un "Light file", donc il ne gaspillera pas une précieu
 - Utilisez le bouton "Mod Manager Download". Installez et activez le(s) fichier(s) dans votre gestionnaire de mods favori (ModOrganizer2 est ma préférence personnelle).
 
 **Manuelle**
-- Extrayez les fichiers requis (cf. `2. CONTENU DU MOD`) depuis l'archive vers votre dossier Data et activez-les dans in-game dans le menu "Creations"
+- Extrayez les fichiers requis (cf. `4. CONTENU DU MOD`) depuis l'archive vers votre dossier Data et activez-les dans in-game dans le menu "Creations"
 
 ## 6. COMPATIBILITE
 
@@ -89,9 +89,9 @@ Les effets légendaires ajoutés par des mods ne seront pas reconnus et donc la 
 
 ## 8. MODS RECOMMANDES
 
-- [Stellar Crafting - Quality Crafting Overhaul](https://www.nexusmods.com/starfield/mods/16665) or [Xeno's No Credits for Upgrades (NCU)](https://www.nexusmods.com/starfield/mods/16526) — Si vous voulez remplacer le coût en crédits par des ressources (J'utilise personnellement Stellar Crafting)
-- [Baka Free Legendary Rolls](https://www.nexusmods.com/starfield/mods/16385) and [Upgrades Cost Only X-Tech](https://www.nexusmods.com/starfield/mods/17771) — Si vous voulez simplement vous débarrasser du coût en crédit
--  [Legendary Aspirational Weapons - Stache's uniques improvement](https://www.nexusmods.com/starfield/mods/10771) — Pour rendre l'option vanilla de Stache plus viable
+- [Stellar Crafting - Quality Crafting Overhaul](https://www.nexusmods.com/starfield/mods/16665) ou [Xeno's No Credits for Upgrades (NCU)](https://www.nexusmods.com/starfield/mods/16526) — Si vous voulez remplacer le coût en crédits par des ressources (J'utilise personnellement Stellar Crafting)
+- [Baka Free Legendary Rolls](https://www.nexusmods.com/starfield/mods/16385) et [Upgrades Cost Only X-Tech](https://www.nexusmods.com/starfield/mods/17771) — Si vous voulez simplement vous débarrasser du coût en crédit
+- [Legendary Aspirational Weapons - Stache's uniques improvement](https://www.nexusmods.com/starfield/mods/10771) — Pour rendre l'option vanilla de Stache plus viable
 
 ## 9. REMERCIEMENTS
 
@@ -100,7 +100,7 @@ Les effets légendaires ajoutés par des mods ne seront pas reconnus et donc la 
 - Merci à Redzy7 pour son post sur le design de Starfield pour la miniature (https://www.reddit.com/r/Starfield/comments/15row6b/im_in_love_the_starfield_design_style_so_here_are/)
 - Merci à xtcrefugee pour avoir répondu à mes questions sur les mid/small masters sur le Discord "Starfield Modding"
 - Merci aux auteurs des polices de Starfield
-- Merci à JonathanOstrus pour son mod [Legendary Module Recycler](https://www.nexusmods.com/starfield/mods/6074) qui a été une bonne ressoure de script
+- Merci à JonathanOstrus pour son mod [Legendary Module Recycler](https://www.nexusmods.com/starfield/mods/6074) qui a été une bonne ressource de script
 - Merci à PearlCanopus pour la traduction allemande
 
 ### 10. OUTILS UTILISES
@@ -114,19 +114,20 @@ Les effets légendaires ajoutés par des mods ne seront pas reconnus et donc la 
 - xTranslator
 - Bethesda Archive Extractor
 - Champollion
-- Gimp
+- Gimp & Photopea
 
 ### 11. LICENCE/LEGALITE 
 
 Si vous comptez modifier et/ou redistribuer ce mod, j'aimerais être averti au préalable SVP. Notez que le mode est sous licence GPL3, donc vous avez obligation de rendre toute modification faite au code source original disponible quelque part publiquement.
 
-Vous pouvez trouver les sources ici : https://github.com/ZeCroque/AstraEconomy
+Vous pouvez trouver le code source ici : https://github.com/ZeCroque/AstraEconomy
 
 ### 12. FEEDBACK
 
 *Vous avez trouvé un bug ou avez une idée de nouvelle fonctionnalité ? Faites-le moi savoir dans la section commentaire de NexusMods ou sur mon [serveur Discord](https://discord.gg/K9Jk4y2tjJ) !*
 
 **Améliorations possibles:**
+- Ajouter plus de vendeurs qui acceptent les Astras
 - Voix générées par IA pour les nouveaux dialogues
 - Ajouter plus d'items issus des DLCs et/ou de mods à l'option vanilla de Stache
 - Vous me dites !

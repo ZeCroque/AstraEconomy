@@ -20,7 +20,7 @@
 
 This mod basically adds two dialog topics to Stache at the Trackers Alliance HQ. It's meant to make looting legendaries more useful and gives a new utility to Astras thanks to the "Free Lanes" upgrade system.
 
-Originally the mod was including its own legendary re-roll system that was less cheaty (IMHO) than the ones in the [Legendary Module Recycler](https://www.nexusmods.com/starfield/mods/6074) mod or in Kinggath Creation's "McClarence Outfitters", because it kept randomness. Now it just relies on X-Tech and the vanilla system, so it's just an alternative to these mods, with a focus on Astras. It has the benefit of giving you more Astras to spend into Stache's vanilla trade system, if you needed just that.
+Originally the mod was including its own legendary re-roll system that was less cheaty (IMHO) than the ones in the [Legendary Module Recycler](https://www.nexusmods.com/starfield/mods/6074) mod or in Kinggath Creation's [McClarence Outfitters](https://creations.bethesda.net/en/starfield/details/d4f5c6a2-ea4f-4f74-b338-6403c5717ec0/McClarence_Outfitters__Legendary_Customization), because it kept randomness. Now it just relies on X-Tech and the vanilla system, so it's just an alternative to these mods, with a focus on Astras. It has the benefit of giving you more Astras to spend into Stache's vanilla trade system, if you needed just that.
 
 ## 2. DETAILS
 
@@ -77,7 +77,7 @@ This mod is flagged as Light file, so it won't waste a precious place in your lo
 - Use the Mod Manager Download button. Install and enable the file(s) in your favorite mod manager (ModOrganizer2 is my personal preference).
 
 **Manual**
-- Extract the required files (cf. `2. MOD CONTENT`) from the archive to your Data folder and activate them in the in-game Creations menu
+- Extract the required files (cf. `4. MOD CONTENT`) from the archive to your Data folder and activate them in the in-game Creations menu
 
 ## 6. COMPATIBILITY
 
@@ -91,7 +91,7 @@ Legendary effects added by mods won't be recognized and thus the cycling logic w
 
 - [Stellar Crafting - Quality Crafting Overhaul](https://www.nexusmods.com/starfield/mods/16665) or [Xeno's No Credits for Upgrades (NCU)](https://www.nexusmods.com/starfield/mods/16526) — If you want to replace the credit cost by resources (I personally use Stellar Crafting)
 - [Baka Free Legendary Rolls](https://www.nexusmods.com/starfield/mods/16385) and [Upgrades Cost Only X-Tech](https://www.nexusmods.com/starfield/mods/17771) — If you simply want to get rid of the credits fee
--  [Legendary Aspirational Weapons - Stache's uniques improvement](https://www.nexusmods.com/starfield/mods/10771) — To make Stache's vanilla option more viable.
+- [Legendary Aspirational Weapons - Stache's uniques improvement](https://www.nexusmods.com/starfield/mods/10771) — To make Stache's vanilla option more viable.
 
 ## 9. CREDITS
 
@@ -114,7 +114,7 @@ Legendary effects added by mods won't be recognized and thus the cycling logic w
 - xTranslator
 - Bethesda Archive Extractor
 - Champollion
-- Gimp
+- Gimp & Photopea
 
 ## 11. LICENSING/LEGAL 
 
@@ -127,6 +127,7 @@ You can find the source code here : https://github.com/ZeCroque/AstraEconomy
 *Found a bug or have an idea for new features? Let me know in NexusMods' comment section or on my [Discord server](https://discord.gg/K9Jk4y2tjJ)!*
 
 **Possible improvements:**
+- Add more vendors that uses Astras
 - AI-generated voices for new dialogs
 - Add more items from DLCs and/or mods into Stache's vanilla option
 - You tell me!
