@@ -20,7 +20,7 @@
 
 Ce mod ajoute simplement deux entrées de dialogue à Stache dans le QG de l'Alliance des Traqueurs. Le but est de rendre le loot d'équipement légendaire plus gratifiant et de donner une nouvelle utilité aux Astras grâce au système d'amélioration introduit par la mise à jour "Free Lanes".
 
-À l'origine le mod comprenait son propre système de "reroll" d'équipement légendaire qui était moins cheaté (à mon avis) que ceux dans le mods [Legendary Module Recycler](https://www.nexusmods.com/starfield/mods/6074) mod ou la creation de l'équipe de Kinggath [McClarence Outfitters](https://creations.bethesda.net/en/starfield/details/d4f5c6a2-ea4f-4f74-b338-6403c5717ec0/McClarence_Outfitters__Legendary_Customization), car il conservait l'aspect aléatoire. Désormais, il repose sur l'X-Tech and le système vanilla, donc c'est juste une alternative à ces mods, avec une emphase sur les Astras. Il a toutefois l'avantage de vous donner plus d'Astras à dépenser via l'option vanilla de Stache, si c'est ce dont vous aviez besoin.
+À l'origine le mod comprenait son propre système de "reroll" d'équipement légendaire qui était moins cheaté (à mon avis) que ceux dans le mods [Legendary Module Recycler](https://www.nexusmods.com/starfield/mods/6074) mod ou la creation de l'équipe de Kinggath [McClarence Outfitters](https://creations.bethesda.net/en/starfield/details/d4f5c6a2-ea4f-4f74-b338-6403c5717ec0/McClarence_Outfitters__Legendary_Customization), car il conservait l'aspect aléatoire. Désormais, il repose sur l'X-Tech et le système vanilla, donc c'est juste une alternative à ces mods, avec une emphase sur les Astras. Il a toutefois l'avantage de vous donner plus d'Astras à dépenser via l'option vanilla de Stache, si c'est ce dont vous aviez besoin.
 
 ## 2. DETAILS
 
@@ -28,7 +28,7 @@ Ce mod ajoute simplement deux entrées de dialogue à Stache dans le QG de l'All
 
 Stache vous donnera un nombre d'Astra correspondant au "niveau d'étoile" des items que vous lui donnez. Toutes les 3 étoiles, vous obtiendrez un Astra.
 
-Le mod supporte toute sorte de combinaison, que voici:
+Le mod supporte toute sorte de combinaisons, que voici:
 - 1x Légendaire 3 étoiles (1 Astra)
 - 3x Légendaire 2 étoiles (2 Astras)
 - 3x Légendaire 4 étoiles (4 Astra)
