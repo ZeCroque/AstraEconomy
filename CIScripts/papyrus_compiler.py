@@ -3,14 +3,16 @@ import os
 import glob
 import re
 
-modVersionString = "1.0.0"
-modVersionFloat = "1.0"
+try:
+    from .mod_info import config
+except ImportError:
+    from mod_info import config
 
 def GetTemplatedVarValue(name, mode):
     if name == "MOD_VERSION":
-        return modVersionFloat
+        return config.buildCode
     elif name == "MOD_VERSION_STRING":
-        return modVersionString
+        return config.modVersionString
     elif name == "IS_AF":
         return "True" if mode else "False"
     else:
