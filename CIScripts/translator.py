@@ -9,7 +9,7 @@ except ImportError:
     from mod_info import config
 
 def replaceCKLaunchArgs(args):
-    mo2IniPath = os.getenv('LOCALAPPDATA') + "\\ModOrganizer\\" + config.Game + "\\ModOrganizer.ini"
+    mo2IniPath = os.getenv('LOCALAPPDATA') + "\\ModOrganizer\\" + config.game + "\\ModOrganizer.ini"
     with open(mo2IniPath, 'r') as file:
         fileData = file.read()
 
@@ -23,7 +23,7 @@ def replaceCKLaunchArgs(args):
         file.write(fileData)
 
 def runCK():
-    subprocess.run(["J:/100Install/mo2/ModOrganizer.exe", "-p", "ZZZ_" + config.modName, "moshortcut://" + config.Game + ":Creation Kit"])
+    subprocess.run(["J:/100Install/mo2/ModOrganizer.exe", "-p", "ZZZ_" + config.modName, "moshortcut://" + config.game + ":Creation Kit"])
 
 def createAllStringFiles():
     stringFiles = os.listdir("./Data/Strings")
@@ -36,11 +36,16 @@ def createAllStringFiles():
 def main():
     if os.path.isdir("./Data/Strings/"):
         shutil.rmtree("./Data/Strings/")
+
+    textExportPath = config.gamePath + "TextExport/" + config.modName + ".esp"
+    if os.path.isdir(textExportPath):
+        shutil.rmtree(textExportPath)
+
     replaceCKLaunchArgs("-TagifyPlugin:" + config.modName + ".esp")
     runCK()
     replaceCKLaunchArgs("-ExportText:" + config.modName + ".esp")
     runCK()
-    replaceCKLaunchArgs("-CompileTextExport:" + config.modName + ".esp en " + config.gamePath + "TextExport/" + config.modName + ".esp")
+    replaceCKLaunchArgs("-CompileTextExport:" + config.modName + ".esp en " + textExportPath)
     runCK()
     createAllStringFiles()
     replaceCKLaunchArgs("")
