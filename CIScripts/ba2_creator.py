@@ -40,12 +40,15 @@ def GetVoicesFromAchList(achlist, mode, languageCode=""):
 
 def GetFilesFromAchList(achList):
     filelist = ""
-    with open(achList, "r") as file:
-        data = json.load(file)
-        for f in data:        
-            filelist += f 
-            filelist += "\n"
-        filelist = filelist.rstrip('\n')
+    try:
+        with open(achList, "r") as file:
+            data = json.load(file)
+            for f in data:        
+                filelist += f 
+                filelist += "\n"
+            filelist = filelist.rstrip('\n')
+    except FileNotFoundError:
+        return filelist
     return filelist
 
 def InitFileList(fileListName, fileList, buildFolder):
@@ -105,14 +108,16 @@ def CopyESMs(outputDir):
     for esmPath in esmPaths:
         shutil.copy(esmPath, outputDir + esmPath)
 
-def CopyFOMODFiles(thumbnail, outputDir):
+def CopyFOMODFiles(outputDir):
     fomodFiles = glob.glob("./fomod/**/*.*", recursive=True)
     for fomodFile in fomodFiles:
         if os.path.isfile(fomodFile) and Path(fomodFile).suffix != ".in":
             dest = outputDir + os.path.dirname(fomodFile)
             os.makedirs(dest, exist_ok=True)
             shutil.copy(fomodFile, dest)
-    shutil.copy(thumbnail, outputDir)
+    thumbnailPath = config.modShortName + "_Thumbnail.png"
+    if os.path.isfile(thumbnailPath):
+        shutil.copy(thumbnailPath, outputDir)
     shutil.copy("readme.md", outputDir)
 
 def CopyArtifactsToDataFolder(artifactsPath):
@@ -160,7 +165,7 @@ def CreateNexusArchive(mainFileList, modifiedVoiceList, vanillaVoiceList, vanill
     CopyESMs(artifactsFullpath)
     
     # Create zip
-    CopyFOMODFiles("AE_Thumbnail.png", artifactsFullpath)
+    CopyFOMODFiles(artifactsFullpath)
     
     # Output
     os.makedirs(outputFolder, exist_ok=True)
@@ -187,15 +192,18 @@ def CreateCreationArchives(mainFileList, vanillaVoiceList, vanillaVoiceListName,
         PrepareFileListForAF(fileListName, config.buildFolder)
 
     # PC build
-    CopyFilesToBuildFolder(GetVoicesFromAchList(vanillaVoiceListName, "PC"), config.buildFolder, isAF)
+    if os.path.isfile(vanillaVoiceListName):
+        CopyFilesToBuildFolder(GetVoicesFromAchList(vanillaVoiceListName, "PC"), config.buildFolder, isAF)
     CreateBA2(fileListName, archiveName + config.archiveExtension, artifactsSubpath + "Data\\")
 
     # Xbox build
-    CopyFilesToBuildFolder(GetVoicesFromAchList(vanillaVoiceListName, "Xbox"), config.buildFolder, isAF)
+    if os.path.isfile(vanillaVoiceListName):
+        CopyFilesToBuildFolder(GetVoicesFromAchList(vanillaVoiceListName, "Xbox"), config.buildFolder, isAF)
     CreateBA2(fileListName, archiveName + "_xbox" + config.archiveExtension, artifactsSubpath + "Data\\")
 
     # PS5 Build
-    CopyFilesToBuildFolder(GetVoicesFromAchList(vanillaVoiceListName, "PS5"), config.buildFolder, isAF)
+    if os.path.isfile(vanillaVoiceListName):
+        CopyFilesToBuildFolder(GetVoicesFromAchList(vanillaVoiceListName, "PS5"), config.buildFolder, isAF)
     CreateBA2(fileListName, archiveName + "_ps" + config.archiveExtension, artifactsSubpath + "Data\\")
 
     # Output
@@ -208,9 +216,9 @@ def CreateCreationArchives(mainFileList, vanillaVoiceList, vanillaVoiceListName,
     shutil.rmtree(config.buildFolder + "Data")
 
 def CreateArchives():
-    mainFileList = GetFilesFromAchList("./Data/AE_Main.achlist")
+    mainFileList = GetFilesFromAchList("./Data/" + config.modShortName + "_Main.achlist")
     modifiedVoiceList = ""
-    vanillaVoiceListName = "./Data/AE_Voices.achlist"
+    vanillaVoiceListName = "./Data/" + config.modShortName + "_Voices.achlist"
     vanillaVoiceList = GetFilesFromAchList(vanillaVoiceListName)
 
     if os.path.isdir(config.buildFolder):
