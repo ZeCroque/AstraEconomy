@@ -228,14 +228,14 @@ def CreateArchives():
         os.remove(config.modFilePathAF)
 
     # Non-AF
-    papyrus_compiler.FillTemplates(0)
-    papyrus_compiler.Compile(0)
+    papyrus_compiler.FillTemplates(papyrus_compiler.CompileMode.DEFAULT)
+    papyrus_compiler.Compile()
     CreateNexusArchive(mainFileList, modifiedVoiceList, vanillaVoiceList, vanillaVoiceListName)
     CreateCreationArchives(mainFileList, vanillaVoiceList, vanillaVoiceListName, False)
 
     # AF
-    papyrus_compiler.FillTemplates(1)
-    papyrus_compiler.Compile(1)
+    papyrus_compiler.FillTemplates(papyrus_compiler.CompileMode.ACHIEVEMENT_FRIENDLY)
+    papyrus_compiler.Compile()
     CreateCreationArchives(mainFileList, vanillaVoiceList, vanillaVoiceListName, True)
 
 def main():   

@@ -2,11 +2,16 @@ import subprocess
 import os
 import glob
 import re
+from enum import IntEnum
 
 try:
     from .mod_info import config
 except ImportError:
     from mod_info import config
+
+class CompileMode(IntEnum):
+    DEFAULT = 0
+    ACHIEVEMENT_FRIENDLY = 1
 
 def GetTemplatedVarValue(name, mode):
     if name == "MOD_VERSION":
@@ -14,7 +19,7 @@ def GetTemplatedVarValue(name, mode):
     elif name == "MOD_VERSION_STRING":
         return config.modVersionString
     elif name == "IS_AF":
-        return "True" if mode else "False"
+        return "True" if mode == CompileMode.ACHIEVEMENT_FRIENDLY else "False"
     else:
         return "undefined"
 
@@ -31,7 +36,7 @@ def FillTemplates(mode):
         with open(os.path.splitext(templateFilePath)[0], 'w') as file:
             file.write(fileData)
 
-def Compile(mode):
+def Compile():
     compiledScriptPaths = glob.glob("./Data/Scripts/**/*.pex", recursive=True)
     for compiledScriptPath in compiledScriptPaths:
         os.remove(compiledScriptPath)
@@ -39,18 +44,18 @@ def Compile(mode):
 
 def main():
     mode = -1
-    while mode != 0 and mode != 1:
+    while mode != CompileMode.DEFAULT and mode != CompileMode.ACHIEVEMENT_FRIENDLY:
         print("Enter build mode\n 0: Non-Achievement-Friendly\n 1: Achievement-Friendly")
         try :
             mode = int(input())
         except ValueError :
             print ("Not a number")
         else:
-            if mode != 0 and mode != 1:
+            if mode != CompileMode.DEFAULT and mode != CompileMode.ACHIEVEMENT_FRIENDLY:
                 print("Invalid value")
         print()
     FillTemplates(mode)
-    Compile(mode)
+    Compile()
 
 if __name__ == "__main__":
     main()
