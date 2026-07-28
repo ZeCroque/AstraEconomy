@@ -40,7 +40,7 @@ def Compile():
     compiledScriptPaths = glob.glob("./Data/Scripts/**/*.pex", recursive=True)
     for compiledScriptPath in compiledScriptPaths:
         os.remove(compiledScriptPath)
-    subprocess.run(["H:/Games/steamapps/common/Starfield/Tools/Papyrus Compiler/PapyrusCompiler.exe", "AstraEconomyRelease.ppj"])
+    subprocess.run(["H:/Games/steamapps/common/Starfield/Tools/Papyrus Compiler/PapyrusCompiler.exe", config.modName + "Release.ppj"])
 
 def main():
     mode = -1
