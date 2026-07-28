@@ -15,6 +15,8 @@ class Config:
     modVersionString: str = ""
     buildCode: str = ""
     modShortName: str = ""
+    game: str = ""
+    gamePath: str = ""
 
     def __post_init__(self):
         with open("preset.json", "r") as file:
@@ -28,6 +30,8 @@ class Config:
             self.modVersionString = data["modVersion"]
             self.buildCode = data["buildCode"] + ".0"
             self.modShortName = data["modShortName"]
+            self.game = data["game"]
+            self.gamePath = data["gamePath"]
 
 def main():   
     print("modName: " + config.modName)
@@ -41,6 +45,8 @@ def main():
     print("modVersionString: " + config.modVersionString)
     print("buildCode: " + config.buildCode)
     print("modShortName: " + config.modShortName)
+    print("game: " + config.game)
+    print("gamePath: " + config.gamePath)
 
 config = Config()
 

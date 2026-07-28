@@ -3,8 +3,13 @@ import os
 import re
 import shutil
 
+try:
+    from .mod_info import config
+except ImportError:
+    from mod_info import config
+
 def replaceCKLaunchArgs(args):
-    mo2IniPath = os.getenv('LOCALAPPDATA') + "\\ModOrganizer\\Starfield\\ModOrganizer.ini"
+    mo2IniPath = os.getenv('LOCALAPPDATA') + "\\ModOrganizer\\" + config.Game + "\\ModOrganizer.ini"
     with open(mo2IniPath, 'r') as file:
         fileData = file.read()
 
@@ -18,7 +23,7 @@ def replaceCKLaunchArgs(args):
         file.write(fileData)
 
 def runCK():
-    subprocess.run(["J:/100Install/mo2/ModOrganizer.exe", "-p", "ZZZ_AstraEconomy", "moshortcut://Starfield:Creation Kit"])
+    subprocess.run(["J:/100Install/mo2/ModOrganizer.exe", "-p", "ZZZ_" + config.modName, "moshortcut://" + config.Game + ":Creation Kit"])
 
 def createAllStringFiles():
     stringFiles = os.listdir("./Data/Strings")
@@ -31,16 +36,16 @@ def createAllStringFiles():
 def main():
     if os.path.isdir("./Data/Strings/"):
         shutil.rmtree("./Data/Strings/")
-    replaceCKLaunchArgs("-TagifyPlugin:AstraEconomy.esp")
+    replaceCKLaunchArgs("-TagifyPlugin:" + config.modName + ".esp")
     runCK()
-    replaceCKLaunchArgs("-ExportText:AstraEconomy.esp")
+    replaceCKLaunchArgs("-ExportText:" + config.modName + ".esp")
     runCK()
-    replaceCKLaunchArgs("-CompileTextExport:AstraEconomy.esp en H:/Games/steamapps/common/Starfield/TextExport/AstraEconomy.esp")
+    replaceCKLaunchArgs("-CompileTextExport:" + config.modName + ".esp en " + config.gamePath + "TextExport/" + config.modName + ".esp")
     runCK()
     createAllStringFiles()
     replaceCKLaunchArgs("")
     runCK()
-    replaceCKLaunchArgs("-DelocalizeMasterfile:AstraEconomy.esm")
+    replaceCKLaunchArgs("-DelocalizeMasterfile:"+ config.modName + ".esm")
     runCK()
     replaceCKLaunchArgs("")
 
