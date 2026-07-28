@@ -30,7 +30,7 @@ def createAllStringFiles():
 
 def main():
     if os.path.isdir("./Data/Strings/"):
-        shutil.rmtree("./Data/Strings")
+        shutil.rmtree("./Data/Strings/")
     replaceCKLaunchArgs("-TagifyPlugin:AstraEconomy.esp")
     runCK()
     replaceCKLaunchArgs("-ExportText:AstraEconomy.esp")

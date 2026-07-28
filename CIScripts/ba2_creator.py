@@ -5,7 +5,7 @@ import os
 import shutil
 import re
 import glob
-import build
+import CIScripts.papyrus_compiler as papyrus_compiler
 
 modName = "AstraEconomy"
 modNameLowerCase = modName.lower()
@@ -208,7 +208,7 @@ def CreateCreationArchives(mainFileList, vanillaVoiceList, vanillaVoiceListName,
     os.remove(buildFolder + fileListName)
     shutil.rmtree(buildFolder + "Data")
 
-def main():   
+def CreateArchives():
     mainFileList = GetFilesFromAchList("./Data/AE_Main.achlist")
     modifiedVoiceList = ""
     vanillaVoiceListName = "./Data/AE_Voices.achlist"
@@ -221,15 +221,18 @@ def main():
         os.remove(modFilePathAF)
 
     # Non-AF
-    build.FillTemplates(0)
-    build.Build(0)
+    papyrus_compiler.FillTemplates(0)
+    papyrus_compiler.Compile(0)
     CreateNexusArchive(mainFileList, modifiedVoiceList, vanillaVoiceList, vanillaVoiceListName)
     CreateCreationArchives(mainFileList, vanillaVoiceList, vanillaVoiceListName, False)
 
     # AF
-    build.FillTemplates(1)
-    build.Build(1)
+    papyrus_compiler.FillTemplates(1)
+    papyrus_compiler.Compile(1)
     CreateCreationArchives(mainFileList, vanillaVoiceList, vanillaVoiceListName, True)
+
+def main():   
+    CreateArchives()
 
 if __name__ == "__main__":
     main()
