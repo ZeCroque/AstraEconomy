@@ -139,27 +139,39 @@ def CreateNexusArchive(mainFileList, modifiedVoiceList, vanillaVoiceList, vanill
     CopyFilesToBuildFolder(vanillaVoiceList, config.buildFolder)
     CopyFilesToBuildFolder(modifiedVoiceList, config.buildFolder)
 
-    # Main build
-    InitFileList(fileListName, mainFileList, config.buildFolder) 
-    CreateBA2(fileListName, config.mainArchiveName + config.archiveExtension, artifactsSubpath + "Data\\")
-    os.remove(config.buildFolder + fileListName)
-    
-    # AI Voices
-    if len(modifiedVoiceList) > 0:
-        InitFileList(fileListName, vanillaVoiceList, config.buildFolder)
-        AppendToFileList(fileListName, modifiedVoiceList, config.buildFolder)
-        CreateBA2(fileListName, config.archiveNameBase + "Voices_en" + config.archiveExtension, artifactsSubpath + "Data\\")
+    if config.localizedVoices:
+        # Main build
+        InitFileList(fileListName, mainFileList, config.buildFolder) 
+        CreateBA2(fileListName, config.mainArchiveName + config.archiveExtension, artifactsSubpath + "Data\\")
         os.remove(config.buildFolder + fileListName)
+        
+        # AI Voices
+        if len(modifiedVoiceList) > 0:
+            InitFileList(fileListName, vanillaVoiceList, config.buildFolder)
+            AppendToFileList(fileListName, modifiedVoiceList, config.buildFolder)
+            CreateBA2(fileListName, config.archiveNameBase + "Voices_en" + config.archiveExtension, artifactsSubpath + "Data\\")
+            os.remove(config.buildFolder + fileListName)
 
-    # NO AI Voices
-    if len(vanillaVoiceList) > 0:
-        InitFileList(fileListName, vanillaVoiceList, config.buildFolder)
-        CreateBA2(fileListName, config.archiveNameBase + ("Voices_en_NO_AI" if len(modifiedVoiceList) > 0 else "Voices_en") + config.archiveExtension, artifactsSubpath + "Data\\")
+        # NO AI Voices
+        if len(vanillaVoiceList) > 0:
+            InitFileList(fileListName, vanillaVoiceList, config.buildFolder)
+            CreateBA2(fileListName, config.archiveNameBase + ("Voices_en_NO_AI" if len(modifiedVoiceList) > 0 else "Voices_en") + config.archiveExtension, artifactsSubpath + "Data\\")
+            os.remove(config.buildFolder + fileListName)
+
+        # Localized voices
+        if len(vanillaVoiceList) > 0:
+            CreateLocalizedVoiceBA2(vanillaVoiceList, vanillaVoiceListName, config.archiveNameBase, config.buildFolder, artifactsSubpath + "Data\\")
+    else:
+        InitFileList(fileListName, mainFileList, config.buildFolder) 
+        if len(vanillaVoiceList) > 0:
+            AppendToFileList(fileListName, vanillaVoiceList, config.buildFolder)
+        CreateBA2(fileListName, config.mainArchiveName + config.archiveExtension, artifactsSubpath + "Data\\")
+
+        if len(modifiedVoiceList) > 0:
+            AppendToFileList(fileListName, modifiedVoiceList, config.buildFolder)
+            CreateBA2(fileListName, config.mainArchiveName + "_NO_AI" + config.archiveExtension, artifactsSubpath + "Data\\")
+
         os.remove(config.buildFolder + fileListName)
-
-    # Localized voices
-    if len(vanillaVoiceList) > 0:
-        CreateLocalizedVoiceBA2(vanillaVoiceList, vanillaVoiceListName, config.archiveNameBase, config.buildFolder, artifactsSubpath + "Data\\")
 
     # Copy esms
     CopyESMs(artifactsFullpath)
@@ -217,7 +229,8 @@ def CreateCreationArchives(mainFileList, vanillaVoiceList, vanillaVoiceListName,
 
 def CreateArchives():
     mainFileList = GetFilesFromAchList("./Data/" + config.modShortName + "_Main.achlist")
-    modifiedVoiceList = ""
+    modifiedVoiceListName = "./Data/" + config.modShortName + "_ModdedVoices.achlist"
+    modifiedVoiceList = GetFilesFromAchList(modifiedVoiceListName)
     vanillaVoiceListName = "./Data/" + config.modShortName + "_Voices.achlist"
     vanillaVoiceList = GetFilesFromAchList(vanillaVoiceListName)
 

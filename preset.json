@@ -4,6 +4,7 @@
     "mo2profileName": "ZZZ_AstraEconomy",
     "modVersion": "1.1.2",
     "buildCode": "1",
+    "localizedVoices": true,
     "game": "Starfield",
     "gamePath": "H:/Games/steamapps/common/Starfield/"
 }
