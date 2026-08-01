@@ -8,6 +8,11 @@ try:
 except ImportError:
     from mod_info import config
 
+try:
+    from . import utils
+except ImportError:
+    import utils
+
 def replaceCKLaunchArgs(args):
     mo2IniPath = os.getenv('LOCALAPPDATA') + "\\ModOrganizer\\" + config.game + "\\ModOrganizer.ini"
     with open(mo2IniPath, 'r') as file:
@@ -27,7 +32,7 @@ def runCK():
 
 def createAllStringFiles():
     stringFiles = os.listdir("./Data/Strings")
-    supportedLanguages = ["de", "es", "fr", "it", "ja", "pl", "ptbr", "zhhans"]
+    supportedLanguages = utils.GetAvailableLanguagesSuffixes(utils.Game(config.game))
 
     for supportedLanguage in supportedLanguages:
         for stringFile in stringFiles:

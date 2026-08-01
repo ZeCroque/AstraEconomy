@@ -16,6 +16,11 @@ try:
 except ImportError:
     from mod_info import config
 
+try:
+    from . import utils
+except ImportError:
+    import utils
+
 
 def GetVoicesFromAchList(achlist, mode, languageCode=""):
     filelist = ""
@@ -94,7 +99,7 @@ def CreateBA2(fileListName, archiveName, outputFolder):
     subprocess.run(["H:/Games/steamapps/common/Starfield/Tools/Archive2/Archive2.exe", "-s=" + fileListName, "-c=" + outputFolder + archiveName,  "-f=General", "-compression=None"], cwd='./build') 
 
 def CreateLocalizedVoiceBA2(voiceList, voiceListPath, archiveNameBase, buildFolder, outputFolder):
-    supportedLanguages = ["de", "es", "fr", "it", "ja", "pl", "ptbr", "zhhans"]
+    supportedLanguages = utils.GetAvailableLanguagesSuffixes(utils.Game(config.game))
     for supportedLanguage in supportedLanguages:
         if os.path.isdir("Data\\LocalizedVoices\\" + supportedLanguage):
             fileListName = supportedLanguage + ".txt"
