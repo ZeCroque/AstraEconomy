@@ -24,6 +24,28 @@
                 "kind": "build",
                 "isDefault": true
             }
+        },
+        {
+            "label": "Papyrus Compile (Release)",
+            "type": "process",
+            "command": "H:\\Games\\steamapps\\common\\Starfield\\Tools\\Papyrus Compiler\\PapyrusCompiler.exe",
+            "args": ["AstraEconomyRelease.ppj"],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Package",
+            "type": "process",
+            "command": "py",
+            "args": ["-3", "./build.py"],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ]
 }

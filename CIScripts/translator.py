@@ -38,7 +38,7 @@ def createAllStringFiles():
         for stringFile in stringFiles:
             shutil.copy("./Data/Strings/" + stringFile, "./Data/Strings/" + stringFile.replace("en", supportedLanguage))
 
-def main():
+def Translate():
     if os.path.isdir("./Data/Strings/"):
         shutil.rmtree("./Data/Strings/")
 
@@ -58,6 +58,9 @@ def main():
     replaceCKLaunchArgs("-DelocalizeMasterfile:"+ config.modName + ".esm")
     runCK()
     replaceCKLaunchArgs("")
+
+def main():
+    Translate()
 
 if __name__ == "__main__":
     main()

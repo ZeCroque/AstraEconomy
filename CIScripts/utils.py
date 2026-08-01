@@ -16,3 +16,14 @@ def GetAvailableLanguagesSuffixes(gameString):
             return ["german", "spanish", "french", "italian", "japanese", "polish", "russian", "chinese"]
         case _:
             return []
+
+def AskForUserConfirm(question):
+    userInput = ""
+    while userInput != "y" and userInput != "n":
+        print(question + ": y/n")
+        userInput = input()
+
+        if userInput != "y" and userInput != "n":
+            print("Invalid value")
+        print()
+    return userInput == "y"

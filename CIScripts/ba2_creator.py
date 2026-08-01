@@ -132,7 +132,7 @@ def CopyArtifactsToDataFolder(artifactsPath):
 
 # ========================================================================
 
-def CreateNexusArchive(mainFileList, modifiedVoiceList, vanillaVoiceList, vanillaVoiceListName):
+def CreateNexusArchive(mainFileList, modifiedVoiceList, vanillaVoiceList, vanillaVoiceListName, localizeVoices):
     buildName = "Nexus"
     artifactsSubpath = "artifacts\\" + buildName + "\\"
     artifactsFullpath = config.buildFolder + artifactsSubpath
@@ -144,7 +144,7 @@ def CreateNexusArchive(mainFileList, modifiedVoiceList, vanillaVoiceList, vanill
     CopyFilesToBuildFolder(vanillaVoiceList, config.buildFolder)
     CopyFilesToBuildFolder(modifiedVoiceList, config.buildFolder)
 
-    if config.localizedVoices:
+    if localizeVoices:
         # Main build
         InitFileList(fileListName, mainFileList, config.buildFolder) 
         CreateBA2(fileListName, config.mainArchiveName + config.archiveExtension, artifactsSubpath + "Data\\")
@@ -246,15 +246,33 @@ def CreateArchives():
         os.remove(config.modFilePathAF)
 
     # Non-AF
-    papyrus_compiler.FillTemplates(papyrus_compiler.CompileMode.DEFAULT)
-    papyrus_compiler.Compile()
-    CreateNexusArchive(mainFileList, modifiedVoiceList, vanillaVoiceList, vanillaVoiceListName)
-    CreateCreationArchives(mainFileList, vanillaVoiceList, vanillaVoiceListName, False)
+
+    scriptsBuilt = False
+    if(utils.AskForUserConfirm("Create nexus archive?")):
+        localizeVoices = False
+        if(vanillaVoiceList or modifiedVoiceList):
+            localizeVoices = utils.AskForUserConfirm("Localize voices?")
+
+        papyrus_compiler.FillTemplates(papyrus_compiler.CompileMode.DEFAULT)
+        papyrus_compiler.Compile()
+        scriptsBuilt = True
+
+        CreateNexusArchive(mainFileList, modifiedVoiceList, vanillaVoiceList, vanillaVoiceListName, localizeVoices)
+
+    if(utils.AskForUserConfirm("Prepare creation release?")):
+        if(not scriptsBuilt):
+            papyrus_compiler.FillTemplates(papyrus_compiler.CompileMode.DEFAULT)
+            papyrus_compiler.Compile()
+            scriptsBuilt = True
+
+        CreateCreationArchives(mainFileList, vanillaVoiceList, vanillaVoiceListName, False)
 
     # AF
-    papyrus_compiler.FillTemplates(papyrus_compiler.CompileMode.ACHIEVEMENT_FRIENDLY)
-    papyrus_compiler.Compile()
-    CreateCreationArchives(mainFileList, vanillaVoiceList, vanillaVoiceListName, True)
+    if(utils.AskForUserConfirm("Prepare achievement-friendly release?")):
+        papyrus_compiler.FillTemplates(papyrus_compiler.CompileMode.ACHIEVEMENT_FRIENDLY)
+        papyrus_compiler.Compile()
+        
+        CreateCreationArchives(mainFileList, vanillaVoiceList, vanillaVoiceListName, True)
 
 def main():   
     CreateArchives()

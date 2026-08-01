@@ -17,7 +17,6 @@ class Config:
     modShortName: str = ""
     game: str = ""
     gamePath: str = ""
-    localizedVoices: bool = False
 
     def __post_init__(self):
         with open("preset.json", "r") as file:
@@ -33,7 +32,6 @@ class Config:
             self.modShortName = data["modShortName"]
             self.game = data["game"]
             self.gamePath = data["gamePath"]
-            self.localizedVoices = data["localizedVoices"]
 
 def main():   
     print("modName: " + config.modName)
@@ -49,7 +47,6 @@ def main():
     print("modShortName: " + config.modShortName)
     print("game: " + config.game)
     print("gamePath: " + config.gamePath)
-    print("localizedVoices: " + str(config.localizedVoices))
 
 config = Config()
 
